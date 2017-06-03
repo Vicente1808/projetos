@@ -41,7 +41,7 @@ public class Claviculario {
 	System.out.println("Data brasileira: "+f.format(data));
         
         Calendar teste = ControladorFuncionarios.getInstance().pedeDataNascimento();
-        
+        //teste 
         
         System.out.println("teste"+ f.format(teste));
         //System.out.println(data);
