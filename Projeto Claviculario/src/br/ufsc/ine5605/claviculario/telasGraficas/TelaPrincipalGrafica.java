@@ -9,6 +9,6 @@ package br.ufsc.ine5605.claviculario.telasGraficas;
  *
  * @author pablo
  */
-public class TelaPrincipal1 {
+public class TelaPrincipalGrafica {
     
 }

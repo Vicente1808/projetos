@@ -102,6 +102,11 @@ public class TelaPrincipal {
         return pedeInt();
     }
     
+    public String pedeString(){
+        teclado.nextLine();
+        return teclado.nextLine();
+    }
+    
     public int pedeInt(){
         boolean repetir;
         int inteiro = 0;
