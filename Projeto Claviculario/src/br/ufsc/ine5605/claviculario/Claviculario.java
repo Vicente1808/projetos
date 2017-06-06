@@ -3,13 +3,10 @@ package br.ufsc.ine5605.claviculario;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
-import br.ufsc.ine5605.claviculario.controladores.ControladorRegistros;
 import br.ufsc.ine5605.claviculario.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.entidades.Veiculo;
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 /**
  *
  * @author Pablo Vicente
