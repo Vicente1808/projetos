@@ -15,7 +15,8 @@ import java.util.Date;
  * @author Pablo Vicente
  */
 public class Claviculario {
-
+    
+    //batata doce
     public static void main(String[] args) {
         Funcionario funcionario = new Funcionario(595,"Pablo", Calendar.getInstance(), "48998288680","Diretor");   
         ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario);
