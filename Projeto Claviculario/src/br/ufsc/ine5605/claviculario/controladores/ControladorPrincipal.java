@@ -5,6 +5,8 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.enums.MensagemAcessoNegacao;
 import br.ufsc.ine5605.claviculario.telas.TelaPrincipal;
 import br.ufsc.ine5605.claviculario.enums.RetiradaEDevolucao;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaPrincipalGrafica;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaRetiradaVeiculo;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
@@ -16,43 +18,44 @@ public class ControladorPrincipal {
     //Atributos
     private static ControladorPrincipal instance; 
 
-    private final TelaPrincipal telaPrincipal;
+    private final TelaPrincipalGrafica telaPrincipal;
+    private final TelaRetiradaVeiculo telaRetirada;
     
     //Construtor
     private ControladorPrincipal(){
-        telaPrincipal = new TelaPrincipal(this);
+        telaPrincipal = new TelaPrincipalGrafica();
+        telaRetirada = new TelaRetiradaVeiculo();
     }
     
     //Métodos Operacionais
-    public RetiradaEDevolucao retirarVeiculo(){
+    public RetiradaEDevolucao retirarVeiculo(int matricula, String placa){
         Calendar c = Calendar.getInstance();
         Date data = c.getTime();
         DateFormat f = DateFormat.getDateInstance(DateFormat.FULL);
         String date = f.format(data);
         
-        int matricula = telaPrincipal.pedeMatricula();
         RetiradaEDevolucao retornoRetirada = RetiradaEDevolucao.MATRICULAINCORRETA;
         
         if(!ControladorFuncionarios.getInstance().validarMatricula(matricula)){
-            String placa = null;
+            placa = null;
             ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.MATRICULAINVALIDA);
             retornoRetirada = RetiradaEDevolucao.MATRICULAINCORRETA;
-        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).isEstaBloqueado()){
-                    String placa = null;
+        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).isBloqueado()){
+                    placa = null;
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.FUNCIONARIOBLOQUEADO);
                     retornoRetirada = RetiradaEDevolucao.USUARIOBLOQUEADO;
         }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente() != null){
-            String placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente();
+            placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente();
             ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.VEICULOPENDENTE);
             retornoRetirada = RetiradaEDevolucao.VEICULOPENDENTE;
 
         }else if((ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==0)&& !(ControladorFuncionarios.getInstance().getFuncionario(matricula).getCargo().equals(EntradaSaida.DIRETOR.getMensagem()))){
-                String placa =null;
+                placa =null;
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.SEMVEICULOSASSOCIADOS);
                 retornoRetirada = RetiradaEDevolucao.SEMVEICULOS;
                 
         }else if(ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==1){
-                String placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos().get(0);
+                placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos().get(0);
                 if(ControladorVeiculos.getInstance().getVeiculo(placa).isChaveClaviculario()){
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSOPERMITIDO);
                     ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(false);
@@ -65,18 +68,14 @@ public class ControladorPrincipal {
         }else{
             int contador = 0;
             boolean resposta = false;
-            String placa;
             do{
-                placa = pedirPlacaVeiculo();
                 if(!validarVeiculoDeFuncionario(matricula, placa) && !(ControladorFuncionarios.getInstance().getFuncionario(matricula).getCargo().equals(EntradaSaida.DIRETOR.getMensagem()))){
                     contador++;
-                    telaPrincipal.bloqueiaAcesso(contador);
-                    resposta = telaPrincipal.perguntarAoUsuario("Deseja retirar outro veículo?");
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSONEGADOAOVEICULO);
                 }
             }while(contador < 3 && (resposta));
             if(contador == 3){
-                ControladorFuncionarios.getInstance().getFuncionario(matricula).setEstaBloqueado(true);
+                ControladorFuncionarios.getInstance().getFuncionario(matricula).setBloqueado(true);
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.FUNCIONARIOBLOQUEADO);
                 retornoRetirada = RetiradaEDevolucao.USUARIOBLOQUEADO;
             }
@@ -114,7 +113,8 @@ public class ControladorPrincipal {
     }
     
     public void carregarMenuPrincipal(){
-        telaPrincipal.exibirMenu();
+        telaRetirada.setVisible(false);
+        telaPrincipal.setVisible(true);
     }
     
     public void carregarMenuVeiculos(){        
@@ -141,7 +141,7 @@ public class ControladorPrincipal {
       //  ControladorVeiculos.getInstance().exibirDadosVeiculo(placa);
    // }
     
-    public void exibirVeiculosAutorizados(int matricula){
+    public void getVeiculosAutorizados(int matricula){
         ControladorVeiculos.getInstance().exbirListaVeiculosFuncionario(ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos());
    }
     
@@ -158,7 +158,7 @@ public class ControladorPrincipal {
     }
     
     public boolean perguntarAoUsuario(String mensagem){
-        return telaPrincipal.perguntarAoUsuario(mensagem);
+        return false;
     }
     
     public void encerrar() {
