@@ -21,25 +21,34 @@ import javax.swing.JFrame;
 public class TelaPrincipalGrafica extends JFrame implements ActionListener {
     
     private ControladorPrincipal ctrl;
+    JButton btRetirar;
+    JButton btDevolver;
+    JButton btGerenciar;
     
-    public TelaPrincipalGrafica() {
+    public TelaPrincipalGrafica(ControladorPrincipal owner) {
+        super("Claviculário Eletrônico");
         init();
-        ctrl = ControladorPrincipal.getInstance();
+        ctrl = owner;
     }
     
     public void init() {
         Container container = this.getContentPane();
         container.setLayout(null);
         
-        JButton btRetirar;
-        JButton btDevolver;
-        JButton btGerenciar;
-        
-        btRetirar = new JButton("Retirar Veiculo");
-        btDevolver = new JButton("Devolver Veiculo");
-        btGerenciar = new JButton("Gerenciar");
+        btRetirar = new JButton();
+        btDevolver = new JButton();
+        btGerenciar = new JButton();
         
         Insets insets = container.getInsets();
+        
+        btRetirar.setText("Retirar Veículo");
+        btRetirar.addActionListener(this);
+        
+        btDevolver.setText("DevolverVeiculo");
+        btDevolver.addActionListener(this);
+        
+        btGerenciar.setText("Gerenciar");
+        btGerenciar.addActionListener(this);
         
         Dimension size = btRetirar.getPreferredSize();
         btRetirar.setBounds(50 + insets.left, 50 + insets.top, 300 + size.width, 50 + size.height);
@@ -64,7 +73,10 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getSource() == btRetirar) {
+             ctrl.carregarMenuRetirada(); 
+             System.out.println("teste");
+        }
     }
     
 }
