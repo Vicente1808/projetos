@@ -122,7 +122,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
         
         setSize(400, 500);
         setLocationRelativeTo(null);
-        setResizable(true);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -154,7 +154,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
                 if(ControladorFuncionarios.getInstance().validarMatricula(matricula)) {
                     placas = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos();
                 } else {
-                    mensagemRetorno = RetiradaEDevolucao.MATRICULAOUPLACAINVALIDA;
+                    mensagemRetorno = RetiradaEDevolucao.MATRICULAINCORRETA;
                 }
                 for(String placa : placas) {
                     cbm.addElement(placa);
@@ -170,10 +170,11 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
             repaint();
         } else if(e.getSource() == btEnviarVeiculo) {
             String placa = (String) cbVeiculosDisponiveis.getModel().getSelectedItem();
-            
-            RetiradaEDevolucao mensagemRetorno = ctrl.retirarVeiculo(matriculaUsuarioConectado, placa);
-            
-            lbEvento.setText(mensagemRetorno.getMensagem());
+            if(placa != null) {
+                RetiradaEDevolucao mensagemRetorno = ctrl.retirarVeiculo(matriculaUsuarioConectado, placa);
+
+                lbEvento.setText(mensagemRetorno.getMensagem());
+            } 
         } else if(e.getSource() == btVoltar) {
             ctrl.carregarMenuPrincipal();
         }

@@ -51,13 +51,13 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
         btGerenciar.addActionListener(this);
         
         Dimension size = btRetirar.getPreferredSize();
-        btRetirar.setBounds(50 + insets.left, 50 + insets.top, 300 + size.width, 50 + size.height);
+        btRetirar.setBounds(40 + insets.left, 50 + insets.top, 300 + size.width, 50 + size.height);
         
         size = btDevolver.getPreferredSize();
-        btDevolver.setBounds(50 + insets.left, 150 + insets.top, 290 + size.width, 50 + size.height);
+        btDevolver.setBounds(40 + insets.left, 150 + insets.top, 290 + size.width, 50 + size.height);
         
         size = btGerenciar.getPreferredSize();
-        btGerenciar.setBounds(50 + insets.left, 250 + insets.top, 330 + size.width, 50 + size.height);
+        btGerenciar.setBounds(40 + insets.left, 250 + insets.top, 330 + size.width, 50 + size.height);
         
         container.add(btRetirar);
         container.add(btDevolver);

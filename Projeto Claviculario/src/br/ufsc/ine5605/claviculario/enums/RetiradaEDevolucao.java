@@ -12,14 +12,15 @@ package br.ufsc.ine5605.claviculario.enums;
 public enum RetiradaEDevolucao {
     VEICULODEVOLVIDO("Veiculo devolvido com sucesso!"),
     VEICULONAOASSOCIADO("Voce não possui a chave desse veiculo"),
-    MATRICULAOUPLACAINVALIDA("A matricula ou placa inserida eh invalida"),
-    MATRICULAINCORRETA("Voçe digitou uma matricula inválida, tente novamnte."),
+    MATRICULAINCORRETA("Você digitou uma matricula inválida "),
     USUARIOBLOQUEADO("A matricula para você digitou está com acesso bloqueado!"),
     VEICULOPENDENTE("O usuário informado já retirou um veículo, devolva-o primeiro."),
-    VEICULOINDISPONIVEL("O veiculo informado está indisponível no momento :(, tente outro."),
+    VEICULOINDISPONIVEL("O veiculo informado está indisponível no momento."),
     VEICULOINDISPONIVEL2("O veiculo disponibilizado para este funcionário já está emprestado."),
-    VEICULORETIRADO("Veiculo retirado com sucesso."),
-    SEMVEICULOS("Funcionário não tem permissão para retirar nenhum veiculo.");
+    SEMVEICULOS("Funcionário não tem permissão para retirar nenhum veiculo."),
+    VEICULORETIRADO("Veiculo retirado com sucesso."), 
+    MATRICULAOUPLACAINVALIDA("Matricula ou placa inserida é inválida");
+    
     
     private final String mensagem;
     
