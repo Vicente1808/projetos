@@ -23,8 +23,8 @@ public class ControladorPrincipal {
     
     //Construtor
     private ControladorPrincipal(){
-        telaPrincipal = new TelaPrincipalGrafica();
-        telaRetirada = new TelaRetiradaVeiculo();
+        telaPrincipal = new TelaPrincipalGrafica(this);
+        telaRetirada = new TelaRetiradaVeiculo(this);
     }
     
     //Métodos Operacionais
@@ -127,6 +127,11 @@ public class ControladorPrincipal {
     
     public void carregarMenuRegistros(){
         ControladorRegistros.getInstance().carregaMenuRegistros();
+    }
+    
+    public void carregarMenuRetirada() {
+        telaPrincipal.setVisible(false);
+        telaRetirada.setVisible(true);
     }
     
     public boolean validarMatricula(int matricula){

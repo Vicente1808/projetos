@@ -6,6 +6,7 @@ import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.claviculario.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.entidades.Veiculo;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaPrincipalGrafica;
 import java.util.Calendar;
 /**
  *
@@ -15,6 +16,7 @@ public class Claviculario {
     
     //batata doce
     public static void main(String[] args) {
+        
         Funcionario funcionario = new Funcionario(595,"Pablo", Calendar.getInstance(), "48998288680","Diretor");   
         ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario);
         Funcionario funcionario2 = new Funcionario(596,"Pedro", Calendar.getInstance(), "48998288680","assistente");   
@@ -44,7 +46,8 @@ public class Claviculario {
         System.out.println("teste"+ f.format(teste));
         //System.out.println(data);
         */
-        ControladorPrincipal.getInstance().carregarMenuPrincipal();
+        ControladorPrincipal ctrl = ControladorPrincipal.getInstance();
+        ctrl.carregarMenuPrincipal();
     }
     
 }

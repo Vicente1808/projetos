@@ -67,12 +67,12 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public boolean isEstaBloqueado() {
+    public boolean isBloqueado() {
         return estaBloqueado;
     }
 
     //Metodos Modificadores
-    public void setEstaBloqueado(boolean estaBloqueado) {
+    public void setBloqueado(boolean estaBloqueado) {
         this.estaBloqueado = estaBloqueado;
     }
     
@@ -87,6 +87,7 @@ public class Funcionario {
     public ArrayList<String> getVeiculos(){
             return veiculos;
     }
+
     
 
         

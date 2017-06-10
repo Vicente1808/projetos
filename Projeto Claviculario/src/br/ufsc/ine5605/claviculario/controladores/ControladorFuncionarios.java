@@ -77,7 +77,7 @@ public class ControladorFuncionarios{
             
             String telefone = funcionario.getTelefone();
             String cargo = funcionario.getCargo();
-            boolean bloqueado = funcionario.isEstaBloqueado();
+            boolean bloqueado = funcionario.isBloqueado();
             String veiculoPendente = funcionario.getVeiculoPendente();
             retornoPesquisa = matricula+","+nome+","+dataNascimento+","+telefone+","+cargo+","+bloqueado+","+veiculoPendente;
             
@@ -132,7 +132,7 @@ public class ControladorFuncionarios{
         if(validarMatricula(matricula)){
             telaFuncionarios.exibirDadosDoFuncionario(pesquisarFuncionario(matricula));
             telaFuncionarios.exibirTelaVeiculosAutorizados();
-            ControladorPrincipal.getInstance().exibirVeiculosAutorizados(matricula);
+            ControladorPrincipal.getInstance().getVeiculosAutorizados(matricula);
             //exibirListaVeiculosFuncionario(matricula);
             retorno = true;
         }

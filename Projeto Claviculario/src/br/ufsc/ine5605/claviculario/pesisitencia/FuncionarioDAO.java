@@ -8,7 +8,6 @@ package br.ufsc.ine5605.claviculario.pesisitencia;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import java.util.Collection;
 import java.util.HashMap;
-import static sun.font.FontManagerNativeLibrary.load;
 
 /**
  *
@@ -43,6 +42,10 @@ public class FuncionarioDAO {
 
     public Collection<Funcionario> getList() {
         return cacheFuncionarios.values();
+    }
+
+    private void load() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

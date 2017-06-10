@@ -72,7 +72,7 @@ public class TelaPrincipal {
         System.out.println("---------------------------------------------------------------------------\n");
         
         System.out.println("Para retirar veículo é necessário informar a matricula e a placa do veiculo\n");
-        System.out.println(ControladorPrincipal.getInstance().retirarVeiculo().getMensagem());
+        //System.out.println(ControladorPrincipal.getInstance().retirarVeiculo().getMensagem());
         
         
         ControladorPrincipal.getInstance().carregarMenuPrincipal();
