@@ -16,8 +16,6 @@ public class Claviculario {
     //batata doce
     public static void main(String[] args) {
         
-        ControladorFuncionarios.getInstance().carregarTelaFuncionarios();
-        
         Funcionario funcionario = new Funcionario(595,"Pablo", Calendar.getInstance(), "48998288680","Diretor");   
         ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario);
         Funcionario funcionario2 = new Funcionario(596,"Pedro", Calendar.getInstance(), "48998288680","assistente");   

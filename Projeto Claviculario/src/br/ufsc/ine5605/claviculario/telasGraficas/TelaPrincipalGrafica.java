@@ -48,7 +48,7 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
         btRetirar.setText("Retirar Veículo");
         btRetirar.addActionListener(this);
         
-        btDevolver.setText("DevolverVeiculo");
+        btDevolver.setText("Devolver Veiculo");
         btDevolver.addActionListener(this);
         
         btGerenciar.setText("Gerenciar");
@@ -67,7 +67,7 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
         btGerenciar.setBounds(40 + insets.left, 350 + insets.top, 330 + size.width, 50 + size.height);
         
         size = lbTitulo.getPreferredSize();
-        lbTitulo.setBounds(180 + insets.left, 50 + insets.top, 200 + size.width, 25 + size.height);
+        lbTitulo.setBounds(150 + insets.left, 50 + insets.top, 200 + size.width, 25 + size.height);
         
         container.add(btRetirar);
         container.add(btDevolver);
@@ -86,7 +86,8 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btRetirar) {
              ctrl.carregarMenuRetirada(); 
-             System.out.println("teste");
+        } else if(e.getSource() == btGerenciar) {
+            ctrl.carregarMenuGerenciamento();
         }
     }
     

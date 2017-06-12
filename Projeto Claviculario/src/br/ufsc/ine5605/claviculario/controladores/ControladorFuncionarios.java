@@ -4,7 +4,7 @@ import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.telas.TelaFuncionarios;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
-import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaFuncionario;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaGerenciamento;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,21 +20,15 @@ public class ControladorFuncionarios{
     private static ControladorFuncionarios instance;
     private final TelaFuncionarios telaFuncionarios;
     private final ArrayList<Funcionario> funcionarios;
-    private final TelaGraficaFuncionario telaGraficaFuncionario;
     private final TelaGraficaDadosFuncionario telaGraficaDadosFuncionario;
         
     //Contrutor
     private ControladorFuncionarios(){
         funcionarios = new ArrayList<>();
         telaFuncionarios = new TelaFuncionarios();
-        telaGraficaFuncionario = new TelaGraficaFuncionario(this);
         telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario();
     }
 
-    public void carregarTelaFuncionarios(){
-        telaGraficaFuncionario.setVisible(true);
-    }
-    
     public void carregarTelaGraficaDadosFuncionarios(String titulo){
         telaGraficaDadosFuncionario.setTitle(titulo);
         telaGraficaDadosFuncionario.setVisible(true);
@@ -184,10 +178,6 @@ public class ControladorFuncionarios{
         return getFuncionario(matricula).getVeiculos().size();
     }
     
-    public void carregarMenuFuncionario(){
-        telaFuncionarios.exibirMenu();
-    }
-
     public void carregarMenuPrincipal(){
         ControladorPrincipal.getInstance().carregarMenuPrincipal();
     }

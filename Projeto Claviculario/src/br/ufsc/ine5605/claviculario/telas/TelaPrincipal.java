@@ -54,7 +54,7 @@ public class TelaPrincipal {
                     ControladorPrincipal.getInstance().carregarMenuVeiculos();
                     break;
                 case 4:
-                    ControladorPrincipal.getInstance().carregarMenuFuncionarios();
+                    ControladorPrincipal.getInstance().carregarMenuGerenciamento();
                     break;
                 case 5:
                     ControladorPrincipal.getInstance().carregarMenuRegistros();

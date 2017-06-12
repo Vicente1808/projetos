@@ -42,7 +42,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         inicia();
     }
     
-    public void inicia(){
+    private void inicia(){
         lbTitulo = new JLabel();
         lbMatricula = new JLabel();
         lbNome = new JLabel();
