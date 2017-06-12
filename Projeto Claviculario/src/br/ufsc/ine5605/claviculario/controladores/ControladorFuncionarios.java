@@ -29,6 +29,7 @@ public class ControladorFuncionarios{
         telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario();
     }
 
+    
     public void carregarTelaGraficaDadosFuncionarios(String titulo){
         telaGraficaDadosFuncionario.setTitle(titulo);
         telaGraficaDadosFuncionario.setVisible(true);
