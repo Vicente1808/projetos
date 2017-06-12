@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -29,6 +30,7 @@ public final class TelaGraficaFuncionario extends JFrame implements ActionListen
     private JButton botaoExcluir;
     private JButton botaoAtualizar;
     private JButton botaoLiberarVeiculos;
+    private JScrollPane scroll;
     private JTable listaFuncionarios;
     
     public TelaGraficaFuncionario(ControladorFuncionarios controladorFuncionarios){
@@ -40,51 +42,53 @@ public final class TelaGraficaFuncionario extends JFrame implements ActionListen
     public void inicia(){
         
         Container container = getContentPane(); // Onde os oobjetos da tela serão adicionados
-        container.setBackground(Color.white);
         container.setLayout(null);
         
         titulo = new JLabel();
         botaoNovo = new JButton();
         botaoExcluir = new JButton();
         botaoAtualizar = new JButton();
-        botaoLiberarVeiculos = new JButton();
+        botaoLiberarVeiculos = new JButton(); 
         //String[] colunas = new String[]{"Matricula","Nome","Data Nascimento","Telefone","Cargo","Status Bloqueio","VeiculoPendente"};
-        listaFuncionarios = new JTable(2,7);
+        listaFuncionarios = new JTable(50,7);
+        scroll = new JScrollPane(listaFuncionarios);
+        
                 
         titulo.setText("Gerenciamento de Funcionarios");
         titulo.setFont(new Font ("perpetura", Font.PLAIN, 20));
         titulo.setForeground(Color.black);
         titulo.setBounds(150, 20, 500, 50);//Margem esquerda, margem topo, tamanho
         
-        listaFuncionarios.setToolTipText("LISTA DE FUNCIONARIOS CADASTRADOS");
-        listaFuncionarios.setBounds(50, 70, 600, 400);
+        listaFuncionarios.setFillsViewportHeight(true);
+        
+        scroll.setBounds(50, 70, 600, 400);
         
         botaoNovo.setText("NOVO");
         botaoNovo.addActionListener(this);
         botaoNovo.setBackground(Color.GREEN);
-        botaoNovo.setBounds(50, 600, 120, 50);//Margem esquerda, margem topo, lagura, altura
+        botaoNovo.setBounds(50, 500, 120, 50);//Margem esquerda, margem topo, lagura, altura
         
         botaoExcluir.setText("EXCLUIR");
         botaoExcluir.addActionListener(this);
-        botaoExcluir.setBounds(190, 600, 120, 50);
+        botaoExcluir.setBounds(190, 500, 120, 50);
         
         botaoAtualizar.setText("ATUALIZAR  CADASTRO");
         botaoAtualizar.addActionListener(this);
-        botaoAtualizar.setBounds(330, 600, 120, 50);
+        botaoAtualizar.setBounds(330, 500, 120, 50);
         
         botaoLiberarVeiculos.setText("LIBERAR VEICULOS");
         botaoLiberarVeiculos.addActionListener(this);
-        botaoLiberarVeiculos.setBounds(470, 600, 120, 50);
+        botaoLiberarVeiculos.setBounds(470, 500, 120, 50);
         
         
         container.add(titulo);
-        container.add(listaFuncionarios);
         container.add(botaoNovo);
         container.add(botaoExcluir);
         container.add(botaoAtualizar);
         container.add(botaoLiberarVeiculos);
+        container.add(scroll);
         
-        setSize(720, 720);
+        setSize(720, 620);
         setLocationRelativeTo(null);
     }
     
