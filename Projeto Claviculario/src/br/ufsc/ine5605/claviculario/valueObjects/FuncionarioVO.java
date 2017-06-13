@@ -20,6 +20,7 @@ public class FuncionarioVO {
     public String telefone;
     public String cargo;
     public boolean bloqueado;
+    public String veiculoPendente;
     public ArrayList<String> veiculos;
     
     public FuncionarioVO() {

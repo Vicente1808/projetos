@@ -4,12 +4,9 @@ import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.telas.TelaFuncionarios;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
-import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaGerenciamento;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -38,39 +35,28 @@ public class ControladorFuncionarios{
         telaGraficaDadosFuncionario.setVisible(true);
     }
     //Metodos Operacionais
-    public String cadastrarFuncionario(){
-        String retornoCadastroFuncionario = EntradaSaida.MATRICULADUPLICA.getMensagem();
-        int matricula = telaFuncionarios.pedirMatriculaFuncionario();
+    public String cadastrarFuncionario(FuncionarioVO funcionarioVO){
         
-        if(!validarMatricula(matricula)){
+        String retornoCadastroFuncionario = EntradaSaida.MATRICULADUPLICA.getMensagem();
+        
+        if(!validarMatricula(funcionarioVO.matricula)){
             
-            String nome = telaFuncionarios.pedirNomeFuncionario();
-            Calendar dataNascimento = telaFuncionarios.pedirDataNascimento();
-            String telefone =telaFuncionarios.pedirTelefone();
-            String cargo = telaFuncionarios.pedirCargo();
-            Funcionario funcionario = new Funcionario(matricula, nome, dataNascimento, telefone, cargo);
+            Funcionario funcionario = new Funcionario(funcionarioVO.matricula, funcionarioVO.nome, funcionarioVO.dataNascimento, funcionarioVO.telefone, funcionarioVO.cargo);
             funcionarios.put(funcionario.getMatricula(), funcionario);
             
-            if(!funcionario.getCargo().equals(EntradaSaida.DIRETOR.getMensagem())){
-                boolean resposta = ControladorPrincipal.getInstance().perguntarAoUsuario(EntradaSaida.PERGUNTA.getMensagem());
-                    if(resposta){    
-                    telaFuncionarios.exibiInformacaoVeiculoCadastrado(matricula);
-                }
-             }
             retornoCadastroFuncionario = EntradaSaida.FUNCIONARIOCADASTRADO.getMensagem();
         }
         
         return retornoCadastroFuncionario;
     }
     
-    public String excluirFuncionario(){
+    public String excluirFuncionario(int matricula){
         String retornoExclusao = EntradaSaida.MATRICULAINVALIDA.getMensagem();
-        int matricula = telaFuncionarios.pedirMatriculaFuncionario();
         if(validarMatricula(matricula)){
             if(getFuncionario(matricula).getVeiculoPendente()!=null){
                 retornoExclusao = EntradaSaida.FUNCIONARIPENDENTE.getMensagem();
             }else{
-                funcionarios.remove(getFuncionario(matricula));
+                funcionarios.remove(getFuncionario(matricula).getMatricula());
                 retornoExclusao = EntradaSaida.FUNCIONARIOEXCLUIDO.getMensagem();
             }
         }
@@ -97,14 +83,15 @@ public class ControladorFuncionarios{
         return retornoPesquisa;
     }
     
-    public String atualizarCadastroFuncionario(){
+    public String atualizarCadastroFuncionario(FuncionarioVO funcionarioVO){
+        
         String retornoCadastro = EntradaSaida.MATRICULAINVALIDA.getMensagem();
-        int matricula = telaFuncionarios.pedirMatriculaFuncionario();
+        int matricula = funcionarioVO.matricula;
+        String nome = funcionarioVO.nome;
+        Calendar dataNascimento = funcionarioVO.dataNascimento;
+        String telefone = funcionarioVO.telefone;
+        String cargo = funcionarioVO.cargo;
         if(validarMatricula(matricula)){
-           String nome = telaFuncionarios.pedirNomeFuncionario();
-           Calendar dataNascimento = telaFuncionarios.pedirDataNascimento();
-           String telefone = telaFuncionarios.pedirTelefone();
-           String cargo = telaFuncionarios.pedirCargo();
            
            Funcionario funcionario = getFuncionario(matricula);
            funcionario.setNome(nome);
@@ -116,11 +103,10 @@ public class ControladorFuncionarios{
         return retornoCadastro;
     }
     
-    public String cadastrarVeiculosNoFuncionario(int matricula){
+    public String cadastrarVeiculosNoFuncionario(int matricula, String placa){
         String retornoCadastroVeiculoNoFuncionario = EntradaSaida.MATRICULAINVALIDA.getMensagem();
         if(validarMatricula(matricula)){
             if(!(getFuncionario(matricula).getCargo().equals(EntradaSaida.DIRETOR.getMensagem()))) {
-                String placa = pedirPlacaVeiculo();
                 if(!ControladorPrincipal.getInstance().validarPlaca(placa)){
                     retornoCadastroVeiculoNoFuncionario = EntradaSaida.PLACAINEXISTENTE.getMensagem();
                 }else{
@@ -139,31 +125,37 @@ public class ControladorFuncionarios{
         return retornoCadastroVeiculoNoFuncionario;
     }
     
-    public boolean consultaFuncionarios(int matricula){
-        boolean retorno = false;
-        if(validarMatricula(matricula)){
-            telaFuncionarios.exibirDadosDoFuncionario(pesquisarFuncionario(matricula));
-            telaFuncionarios.exibirTelaVeiculosAutorizados();
-            ControladorPrincipal.getInstance().getVeiculosAutorizados(matricula);
-            //exibirListaVeiculosFuncionario(matricula);
-            retorno = true;
-        }
-        return retorno;
-    }
-    
     public boolean validarMatricula(int matricula){
         return getFuncionario(matricula)!=null;
     }
     
-    public Funcionario getFuncionario(int matricula){
-        Funcionario funcionarioMatricula = null;
+    public FuncionarioVO getDadosFuncionario(int matricula){
+        FuncionarioVO funcionarioVO = null;
         for(Funcionario funcionario : funcionarios.values()){
             if(funcionario != null && funcionario.getMatricula()==matricula){
-                funcionarioMatricula = funcionario;
+                funcionarioVO.matricula = funcionario.getMatricula();
+                funcionarioVO.nome = funcionario.getNome();
+                funcionarioVO.dataNascimento = funcionario.getDataNascimento();
+                funcionarioVO.telefone = funcionario.getTelefone();
+                funcionarioVO.cargo = funcionario.getCargo();
+                funcionarioVO.bloqueado = funcionario.isBloqueado();
+                funcionarioVO.veiculoPendente = funcionario.getVeiculoPendente();
+                funcionarioVO.veiculos = funcionario.getVeiculos();
                 break;
             }
        }
-            return funcionarioMatricula;
+        return funcionarioVO;
+    }
+    
+    public Funcionario getFuncionario(int matricula){
+        Funcionario funcionarioRetorno= null;
+        for(Funcionario funcionario : funcionarios.values()){
+            if(funcionario != null && funcionario.getMatricula()==matricula){
+                funcionarioRetorno = funcionario;
+                break;
+            }
+       }
+            return funcionarioRetorno;
     }
     
     public String pedirPlacaVeiculo(){

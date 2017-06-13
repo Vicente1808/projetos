@@ -7,7 +7,6 @@ package br.ufsc.ine5605.claviculario.telasGraficas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,10 +28,10 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
     private final ControladorPrincipal ctrl;
     
     private JLabel titulo;
-    private JButton botaoNovo;
-    private JButton botaoExcluir;
-    private JButton botaoAtualizar;
-    private JButton botaoLiberarVeiculos;
+    private JButton btNovo;
+    private JButton btExcluir;
+    private JButton btAtualizar;
+    private JButton btLiberarVeiculos;
     private JScrollPane scroll;
     private JTable listaFuncionarios;
     private TableModelPessoal tableModel;
@@ -44,71 +43,61 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
     }
     
     private void inicia(){
-        
         Container container = getContentPane();
         container.setLayout(null);
         
         titulo = new JLabel();
-        botaoNovo = new JButton();
-        botaoExcluir = new JButton();
-        botaoAtualizar = new JButton();
-        botaoLiberarVeiculos = new JButton(); 
-        //String[] colunas = new String[]{"Matricula","Nome","Data Nascimento","Telefone","Cargo","Status Bloqueio","VeiculoPendente"};
-        listaFuncionarios = new JTable() {
-            @Override
-            public boolean isCellEditable(int row, int clolumn) {
-                return false;
-            }
-        };
-       
-        
-        //tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
-        
-        //listaFuncionarios.setModel(tableModel);
+        btNovo = new JButton();
+        btExcluir = new JButton();
+        btAtualizar = new JButton();
+        btLiberarVeiculos = new JButton(); 
+        listaFuncionarios = new JTable(); 
+        tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
         scroll = new JScrollPane(listaFuncionarios);
         
         Insets insets = container.getInsets();
         
+        Dimension size = titulo.getPreferredSize();
+        titulo.setBounds(insets.left + 175, insets.top + 20, size.width + 400, size.height + 40);
+        
+        size = btNovo.getPreferredSize();
+        btNovo.setBounds(insets.left + 50, insets.top + 500, size.width + 95, size.height + 40);
+        
+        size = btExcluir.getPreferredSize();
+        btExcluir.setBounds(insets.left + 200, insets. top + 500, size.width + 95, size.height + 40);
+        
+        size = btAtualizar.getPreferredSize();
+        btAtualizar.setBounds(insets.left + 350, insets. top + 500, size.width + 95, size.height + 40);
+        
+        size = btLiberarVeiculos.getPreferredSize();
+        btLiberarVeiculos.setBounds(insets.left + 500, insets.top + 500, size.width + 100, size.height + 40);
+        
+        size = scroll.getPreferredSize();
+        scroll.setBounds(insets.left + 50, insets.top + 70, size.width + 133, size.height);
+
         titulo.setText("Gerenciamento de Funcionarios");
         titulo.setFont(new Font ("perpetura", Font.PLAIN, 20));
-        titulo.setForeground(Color.black);
-        titulo.setBounds(150, 20, 500, 50);//Margem esquerda, margem topo, tamanho
         
+        btNovo.setText("Novo");
+        btNovo.addActionListener(this);
+        
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(this);
+        
+        btAtualizar.setText("Atualizar");
+        btAtualizar.addActionListener(this);
+        
+        btLiberarVeiculos.setText("Liberar veiculos");
+        btLiberarVeiculos.addActionListener(this);
+        
+        listaFuncionarios.setModel(tableModel);
         listaFuncionarios.setFillsViewportHeight(true);
         
-        scroll.setBounds(50, 70, 600, 400);
-        
-        
-        botaoNovo.setText("Novo");
-        botaoNovo.addActionListener(this);
-        
-        botaoExcluir.setText("Excluir");
-        botaoExcluir.addActionListener(this);
-        
-        botaoAtualizar.setText("Atualizar");
-        botaoAtualizar.addActionListener(this);
-        
-        botaoLiberarVeiculos.setText("Liberar veiculos");
-        botaoLiberarVeiculos.addActionListener(this);
-        
-        
-        Dimension size = botaoNovo.getPreferredSize();
-        botaoNovo.setBounds(insets.left + 50, insets. top + 500, size.width + 75, size.height + 30);
-        
-        size = botaoExcluir.getPreferredSize();
-        botaoExcluir.setBounds(insets.left + 190, insets. top + 500, size.width + 75, size.height + 30);
-        
-        size = botaoAtualizar.getPreferredSize();
-        botaoAtualizar.setBounds(insets.left + 330, insets. top + 500, size.width + 75, size.height + 30);
-        
-        size = botaoLiberarVeiculos.getPreferredSize();
-        botaoLiberarVeiculos.setBounds(insets.left + 500, insets.top + 500, size.width + 75, size.height + 30);
-        
         container.add(titulo);
-        container.add(botaoNovo);
-        container.add(botaoExcluir);
-        container.add(botaoAtualizar);
-        container.add(botaoLiberarVeiculos);
+        container.add(btNovo);
+        container.add(btExcluir);
+        container.add(btAtualizar);
+        container.add(btLiberarVeiculos);
         container.add(scroll);
         
         setSize(720, 620);
@@ -118,7 +107,7 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == botaoNovo){
+        if(ae.getSource() == btNovo){
             ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Novo Funcionario");
         }else{
             

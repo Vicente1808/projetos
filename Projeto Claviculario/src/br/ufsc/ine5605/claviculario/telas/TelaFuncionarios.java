@@ -77,7 +77,7 @@ public class TelaFuncionarios {
         System.out.println("========================= Cadastro de Funcionario =========================");
         System.out.println("---------------------------------------------------------------------------");
                 
-        System.out.println(ControladorFuncionarios.getInstance().cadastrarFuncionario());
+        //System.out.println(ControladorFuncionarios.getInstance().cadastrarFuncionario());
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
     }
 
@@ -86,7 +86,7 @@ public class TelaFuncionarios {
         System.out.println("=========================== Excluir Funcionario ===========================");
         System.out.println("---------------------------------------------------------------------------");
         
-        System.out.println(ControladorFuncionarios.getInstance().excluirFuncionario());
+        //System.out.println(ControladorFuncionarios.getInstance().excluirFuncionario());
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();  
     }
 
@@ -95,9 +95,6 @@ public class TelaFuncionarios {
         System.out.println("========================== Consulta Funcionario ===========================");
         System.out.println("---------------------------------------------------------------------------");
         int matricula = pedirMatriculaFuncionario();
-        if(!(ControladorFuncionarios.getInstance().consultaFuncionarios(matricula))){
-            System.out.println(EntradaSaida.MATRICULAINVALIDA.getMensagem());
-        }
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
     }
 
@@ -105,7 +102,7 @@ public class TelaFuncionarios {
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("=========================== Atualizar Cadastro ============================");
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println(ControladorFuncionarios.getInstance().atualizarCadastroFuncionario());
+        //System.out.println(ControladorFuncionarios.getInstance().atualizarCadastroFuncionario());
         ///int matricula = pedirMatriculaFuncionario();
         //exibiInformacaoVeiculoCadastrado(matricula);
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();  
@@ -128,7 +125,7 @@ public class TelaFuncionarios {
     public void exibiInformacaoVeiculoCadastrado(int matricula){
         exibirTelaCadastroVeiculosFuncionario();
         do{
-            System.out.println(ControladorFuncionarios.getInstance().cadastrarVeiculosNoFuncionario(matricula));
+            //System.out.println(ControladorFuncionarios.getInstance().cadastrarVeiculosNoFuncionario(matricula));
         }while(ControladorPrincipal.getInstance().perguntarAoUsuario(EntradaSaida.PERGUNTA.getMensagem()));
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
     }

@@ -5,7 +5,7 @@
  */
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
-import br.ufsc.ine5605.claviculario.entidades.Funcionario;
+import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.util.HashMap;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -17,29 +17,29 @@ import javax.swing.table.TableModel;
  */
 public class TableModelPessoal implements TableModel {
     
-    private final String[] nomeColunas = {"Matricula", "Nome", "Nascimento", "Telefone", "Cargo", "Status"};
+    private final String[] nomeColunas = {"Matricula", "Nome", "Nascimento", "Telefone", "Cargo", "Bloqueado"};
     private final Object[][] data;
     
     
     
-    TableModelPessoal(HashMap<Integer, Funcionario> lista) {
-        data = new Object[lista.keySet().size()][5];
+    TableModelPessoal(HashMap<Integer, FuncionarioVO> lista) {
+        data = new Object[lista.keySet().size()][6];
         int index = 0;
         for(Integer chave : lista.keySet()) {
             lista.get(chave);
-            data[index][0] = lista.get(chave).getMatricula();
-            data[index][1] = lista.get(chave).getNome();
-            data[index][2] = lista.get(chave).getDataNascimento();
-            data[index][3] = lista.get(chave).getTelefone();
-            data[index][4] = lista.get(chave).getCargo();
-            data[index][5] = lista.get(chave).isBloqueado();
-            
+            data[index][0] = lista.get(chave).matricula;
+            data[index][1] = lista.get(chave).nome;
+            data[index][2] = lista.get(chave).dataNascimento;
+            data[index][3] = lista.get(chave).telefone;
+            data[index][4] = lista.get(chave).cargo;
+            data[index][5] = lista.get(chave).bloqueado;
+            index++;
         }
     }
 
     @Override
     public int getRowCount() {
-        return nomeColunas.length;
+        return data.length;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TableModelPessoal implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int col) {
-        return data[0][col].getClass();
+        return getValueAt(0, col).getClass();
     }
 
     @Override

@@ -4,6 +4,7 @@ package br.ufsc.ine5605.claviculario.controladores;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.enums.MensagemAcessoNegacao;
 import br.ufsc.ine5605.claviculario.enums.RetiradaEDevolucao;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDevolucao;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaGerenciamento;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaPrincipalGrafica;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaRetiradaVeiculo;
@@ -19,12 +20,14 @@ public class ControladorPrincipal {
     private static ControladorPrincipal instance; 
 
     private final TelaPrincipalGrafica telaPrincipal;
+    private final TelaGraficaDevolucao telaDevolucao;
     private final TelaRetiradaVeiculo telaRetirada;
     private final TelaGraficaGerenciamento telaGerenciamento;
     
     //Construtor
     private ControladorPrincipal(){
         telaPrincipal = new TelaPrincipalGrafica(this);
+        telaDevolucao = new TelaGraficaDevolucao(this);
         telaRetirada = new TelaRetiradaVeiculo(this);
         telaGerenciamento = new TelaGraficaGerenciamento(this);
     }
@@ -115,12 +118,24 @@ public class ControladorPrincipal {
     }
     
     public void carregarMenuPrincipal(){
+        telaGerenciamento.setVisible(false);
+        telaDevolucao.setVisible(false);
         telaRetirada.setVisible(false);
         telaPrincipal.setVisible(true);
     }
     
-    public void carregarMenuVeiculos(){        
-        ControladorVeiculos.getInstance().carregarMenuVeiculos();
+    public void carregarMenuRetirada() {
+        telaPrincipal.setVisible(false);
+        telaGerenciamento.setVisible(false);
+        telaDevolucao.setVisible(false);
+        telaRetirada.setVisible(true);
+    }
+    
+    public void carregarMenuDevolucao() {
+        telaPrincipal.setVisible(false);
+        telaGerenciamento.setVisible(false);
+        telaRetirada.setVisible(false);
+        telaDevolucao.setVisible(true);
     }
     
     public void carregarMenuGerenciamento(){
@@ -131,11 +146,6 @@ public class ControladorPrincipal {
     
     public void carregarMenuRegistros(){
         ControladorRegistros.getInstance().carregaMenuRegistros();
-    }
-    
-    public void carregarMenuRetirada() {
-        telaPrincipal.setVisible(false);
-        telaRetirada.setVisible(true);
     }
     
     public boolean validarMatricula(int matricula){

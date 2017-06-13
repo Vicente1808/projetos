@@ -51,7 +51,7 @@ public class TelaPrincipal {
                     exibirTelaDevolucaoVeiculo();
                     break;
                 case 3:
-                    ControladorPrincipal.getInstance().carregarMenuVeiculos();
+                    ControladorPrincipal.getInstance().carregarMenuDevolucao();
                     break;
                 case 4:
                     ControladorPrincipal.getInstance().carregarMenuGerenciamento();

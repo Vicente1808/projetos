@@ -150,14 +150,13 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
                 excecao = true;
             }
             if(!excecao) {
-                placas = new ArrayList<>();
                 if(ControladorFuncionarios.getInstance().validarMatricula(matricula)) {
-                    placas = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos();
-                } else {
-                    mensagemRetorno = RetiradaEDevolucao.MATRICULAINCORRETA;
-                }
+                    placas = ControladorFuncionarios.getInstance().getDadosFuncionario(matricula).veiculos;                
                 for(String placa : placas) {
                     cbm.addElement(placa);
+                } 
+                } else {
+                    mensagemRetorno = RetiradaEDevolucao.MATRICULAINCORRETA;
                 }
             } else {
                 mensagemRetorno = RetiradaEDevolucao.MATRICULAINCORRETA;

@@ -30,11 +30,11 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
     
     public TelaPrincipalGrafica(ControladorPrincipal owner) {
         super("Claviculário Eletrônico");
-        init();
         ctrl = owner;
+        init();
     }
     
-    public void init() {
+    private void init() {
         Container container = this.getContentPane();
         container.setLayout(null);
         
@@ -85,7 +85,9 @@ public class TelaPrincipalGrafica extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btRetirar) {
-             ctrl.carregarMenuRetirada(); 
+             ctrl.carregarMenuRetirada();
+        } else if(e.getSource() == btDevolver) {
+            ctrl.carregarMenuDevolucao();
         } else if(e.getSource() == btGerenciar) {
             ctrl.carregarMenuGerenciamento();
         }
