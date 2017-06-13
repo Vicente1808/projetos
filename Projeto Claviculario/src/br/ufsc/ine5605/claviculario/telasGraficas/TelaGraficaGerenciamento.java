@@ -14,7 +14,6 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -114,6 +113,7 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
         
         setSize(720, 620);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     @Override
