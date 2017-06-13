@@ -13,11 +13,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -34,16 +37,17 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
     private JButton botaoLiberarVeiculos;
     private JScrollPane scroll;
     private JTable listaFuncionarios;
+    private TableModelPessoal tableModel;
     
     public TelaGraficaGerenciamento(ControladorPrincipal owner){
-        super("Gerenciamento De Funcionários");//Colona nome a janela
+        super("Gerenciamento De Funcionários");
         ctrl = owner;
         inicia();
     }
     
     private void inicia(){
         
-        Container container = getContentPane(); // Onde os oobjetos da tela serão adicionados
+        Container container = getContentPane();
         container.setLayout(null);
         
         titulo = new JLabel();
@@ -58,6 +62,11 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
                 return false;
             }
         };
+       
+        
+        //tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
+        
+        //listaFuncionarios.setModel(tableModel);
         scroll = new JScrollPane(listaFuncionarios);
         
                 
@@ -70,20 +79,19 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
         
         scroll.setBounds(50, 70, 600, 400);
         
-        botaoNovo.setText("NOVO");
+        botaoNovo.setText("Novo");
         botaoNovo.addActionListener(this);
-        botaoNovo.setBackground(Color.GREEN);
         botaoNovo.setBounds(50, 500, 120, 50);//Margem esquerda, margem topo, lagura, altura
         
-        botaoExcluir.setText("EXCLUIR");
+        botaoExcluir.setText("Excluir");
         botaoExcluir.addActionListener(this);
         botaoExcluir.setBounds(190, 500, 120, 50);
         
-        botaoAtualizar.setText("ATUALIZAR  CADASTRO");
+        botaoAtualizar.setText("Atualizar");
         botaoAtualizar.addActionListener(this);
         botaoAtualizar.setBounds(330, 500, 120, 50);
         
-        botaoLiberarVeiculos.setText("LIBERAR VEICULOS");
+        botaoLiberarVeiculos.setText("Liberar veiculos");
         botaoLiberarVeiculos.addActionListener(this);
         botaoLiberarVeiculos.setBounds(470, 500, 120, 50);
         
