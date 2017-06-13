@@ -33,7 +33,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
     private JLabel lbTelefone;
     private JLabel lbCargo;
     private JLabel  lbBloqueado;
-    private JLabel telinha;
+    private JLabel infoTela;
         
     private JFormattedTextField matricula;
     private JTextField nome;
@@ -54,7 +54,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbTelefone = new JLabel();
         lbCargo = new JLabel();
         lbBloqueado = new JLabel();
-        telinha = new JLabel();
+        infoTela = new JLabel();
         
         matricula = new JFormattedTextField();
         nome = new JTextField();
@@ -101,12 +101,13 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbBloqueado.setBounds(50, 300, 100, 50);
         
         bloqueado.setText("Bloqueado");
-        bloqueado.setBounds(170, 310, 120, 25);
+        bloqueado.setBounds(170, 315, 120, 25);
         
         JPanel painel = new JPanel();
         
+        infoTela.setText("teste");
         
-        painel.setBounds(50, 400, 290, 200);
+        painel.setBounds(320, 60, 320, 300);
         painel.setBackground(Color.white);
         
         JScrollPane jscroll = new JScrollPane(painel);
@@ -126,8 +127,9 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         container.add(cargo);
         container.add(bloqueado);
         container.add(painel);
+        container.add(infoTela);
         
-        setSize(700,600);
+        setSize(680,460);
         setLocationRelativeTo(null);
     }   
             
