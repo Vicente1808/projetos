@@ -5,10 +5,13 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.telas.TelaFuncionarios;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaGerenciamento;
+import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
@@ -19,12 +22,12 @@ public class ControladorFuncionarios{
     //Atributos
     private static ControladorFuncionarios instance;
     private final TelaFuncionarios telaFuncionarios;
-    private final ArrayList<Funcionario> funcionarios;
+    private final HashMap<Integer, Funcionario> funcionarios;
     private final TelaGraficaDadosFuncionario telaGraficaDadosFuncionario;
         
     //Contrutor
     private ControladorFuncionarios(){
-        funcionarios = new ArrayList<>();
+        funcionarios = new HashMap<>();
         telaFuncionarios = new TelaFuncionarios();
         telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario();
     }
@@ -46,7 +49,7 @@ public class ControladorFuncionarios{
             String telefone =telaFuncionarios.pedirTelefone();
             String cargo = telaFuncionarios.pedirCargo();
             Funcionario funcionario = new Funcionario(matricula, nome, dataNascimento, telefone, cargo);
-            funcionarios.add(funcionario);
+            funcionarios.put(funcionario.getMatricula(), funcionario);
             
             if(!funcionario.getCargo().equals(EntradaSaida.DIRETOR.getMensagem())){
                 boolean resposta = ControladorPrincipal.getInstance().perguntarAoUsuario(EntradaSaida.PERGUNTA.getMensagem());
@@ -154,7 +157,7 @@ public class ControladorFuncionarios{
     
     public Funcionario getFuncionario(int matricula){
         Funcionario funcionarioMatricula = null;
-        for(Funcionario funcionario: funcionarios){
+        for(Funcionario funcionario : funcionarios.values()){
             if(funcionario != null && funcionario.getMatricula()==matricula){
                 funcionarioMatricula = funcionario;
                 break;
@@ -168,7 +171,7 @@ public class ControladorFuncionarios{
     }
     
     public void excluirVeiculoTodosFuncionarios(String placa){
-        for(Funcionario funcionario : funcionarios){
+        for(Funcionario funcionario : funcionarios.values()){
             if(funcionario.getVeiculos().contains(placa)){
                 funcionario.getVeiculos().remove(placa);
             }
@@ -189,13 +192,27 @@ public class ControladorFuncionarios{
     //}
     
     public void exibirDadosDeTodosFuncionarios(){
-        for(Funcionario funcionario:funcionarios){
+        for(Funcionario funcionario:funcionarios.values()){
             telaFuncionarios.exibirDadosDoFuncionario(pesquisarFuncionario(funcionario.getMatricula()));
         }
     }
     
-    public ArrayList<Funcionario> getFuncionarios() {
-        return funcionarios;
+    public Collection getFuncionarios() {
+        HashMap<Integer, FuncionarioVO> funcionariosVO = new HashMap<>();
+        
+        for(Integer chave : funcionarios.keySet()) {
+            Funcionario funcionario = funcionarios.get(chave);
+            FuncionarioVO funcionarioVO = new FuncionarioVO();
+            funcionarioVO.matricula = funcionario.getMatricula();
+            funcionarioVO.nome = funcionario.getNome();
+            funcionarioVO.dataNascimento = funcionario.getDataNascimento();
+            funcionarioVO.telefone = funcionario.getTelefone();
+            funcionarioVO.cargo = funcionario.getCargo();
+            funcionarioVO.bloqueado = funcionario.isBloqueado();
+            funcionarioVO.veiculos = funcionario.getVeiculos();
+            funcionariosVO.put(funcionarioVO.matricula, funcionarioVO);
+        }
+        return funcionariosVO.values();
     }
     
     public Calendar pedirDataNascimento(){

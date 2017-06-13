@@ -13,11 +13,11 @@ import java.util.HashMap;
  *
  * @author pablo
  */
-public class FuncionarioTipoDAO {
+public class MapeadorFuncionario {
     private final HashMap<Integer, Funcionario> cacheFuncionarios;
     private final String filename = "funcionario.cla";
     
-    public FuncionarioTipoDAO(){
+    public MapeadorFuncionario(){
         cacheFuncionarios = new HashMap<>();
         load();
     }  
