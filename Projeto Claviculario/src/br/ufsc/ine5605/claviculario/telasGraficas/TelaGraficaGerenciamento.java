@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -19,8 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -69,7 +68,8 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
         //listaFuncionarios.setModel(tableModel);
         scroll = new JScrollPane(listaFuncionarios);
         
-                
+        Insets insets = container.getInsets();
+        
         titulo.setText("Gerenciamento de Funcionarios");
         titulo.setFont(new Font ("perpetura", Font.PLAIN, 20));
         titulo.setForeground(Color.black);
@@ -79,22 +79,31 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
         
         scroll.setBounds(50, 70, 600, 400);
         
+        
         botaoNovo.setText("Novo");
         botaoNovo.addActionListener(this);
-        botaoNovo.setBounds(50, 500, 120, 50);//Margem esquerda, margem topo, lagura, altura
         
         botaoExcluir.setText("Excluir");
         botaoExcluir.addActionListener(this);
-        botaoExcluir.setBounds(190, 500, 120, 50);
         
         botaoAtualizar.setText("Atualizar");
         botaoAtualizar.addActionListener(this);
-        botaoAtualizar.setBounds(330, 500, 120, 50);
         
         botaoLiberarVeiculos.setText("Liberar veiculos");
         botaoLiberarVeiculos.addActionListener(this);
-        botaoLiberarVeiculos.setBounds(470, 500, 120, 50);
         
+        
+        Dimension size = botaoNovo.getPreferredSize();
+        botaoNovo.setBounds(insets.left + 50, insets. top + 500, size.width + 75, size.height + 30);
+        
+        size = botaoExcluir.getPreferredSize();
+        botaoExcluir.setBounds(insets.left + 190, insets. top + 500, size.width + 75, size.height + 30);
+        
+        size = botaoAtualizar.getPreferredSize();
+        botaoAtualizar.setBounds(insets.left + 330, insets. top + 500, size.width + 75, size.height + 30);
+        
+        size = botaoLiberarVeiculos.getPreferredSize();
+        botaoLiberarVeiculos.setBounds(insets.left + 500, insets.top + 500, size.width + 75, size.height + 30);
         
         container.add(titulo);
         container.add(botaoNovo);

@@ -197,7 +197,7 @@ public class ControladorFuncionarios{
         }
     }
     
-    public Collection getFuncionarios() {
+    public HashMap getFuncionarios() {
         HashMap<Integer, FuncionarioVO> funcionariosVO = new HashMap<>();
         
         for(Integer chave : funcionarios.keySet()) {
@@ -212,7 +212,7 @@ public class ControladorFuncionarios{
             funcionarioVO.veiculos = funcionario.getVeiculos();
             funcionariosVO.put(funcionarioVO.matricula, funcionarioVO);
         }
-        return funcionariosVO.values();
+        return funcionariosVO;
     }
     
     public Calendar pedirDataNascimento(){
