@@ -140,7 +140,7 @@ public class ControladorFuncionarios{
                 funcionarioVO.cargo = funcionario.getCargo();
                 funcionarioVO.bloqueado = funcionario.isBloqueado();
                 funcionarioVO.veiculoPendente = funcionario.getVeiculoPendente();
-                funcionarioVO.funcionarios = funcionario.getVeiculos();
+                funcionarioVO.veiculos = funcionario.getVeiculos();
                 break;
             }
        }
@@ -201,7 +201,7 @@ public class ControladorFuncionarios{
             funcionarioVO.telefone = funcionario.getTelefone();
             funcionarioVO.cargo = funcionario.getCargo();
             funcionarioVO.bloqueado = funcionario.isBloqueado();
-            funcionarioVO.funcionarios = funcionario.getVeiculos();
+            funcionarioVO.veiculos = funcionario.getVeiculos();
             funcionariosVO.put(funcionarioVO.matricula, funcionarioVO);
         }
         return funcionariosVO;
