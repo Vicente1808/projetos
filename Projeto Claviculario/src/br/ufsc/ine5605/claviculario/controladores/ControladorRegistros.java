@@ -4,7 +4,7 @@ import br.ufsc.ine5605.claviculario.entidades.Registro;
 import br.ufsc.ine5605.claviculario.entidades.RegistroDevolucao;
 import br.ufsc.ine5605.claviculario.enums.MensagemAcessoNegacao;
 import br.ufsc.ine5605.claviculario.entidades.RegistroRetirada;
-import br.ufsc.ine5605.claviculario.telas.TelaRegistros;
+import br.ufsc.ine5605.claviculario.zzantigos.telas.TelaRegistros;
 import java.util.ArrayList;
 import java.util.Date;
 

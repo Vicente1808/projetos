@@ -2,7 +2,7 @@ package br.ufsc.ine5605.claviculario.controladores;
 
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
-import br.ufsc.ine5605.claviculario.telas.TelaFuncionarios;
+import br.ufsc.ine5605.claviculario.zzantigos.telas.TelaFuncionarios;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.text.SimpleDateFormat;

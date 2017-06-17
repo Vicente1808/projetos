@@ -2,7 +2,7 @@ package br.ufsc.ine5605.claviculario.controladores;
 
 import br.ufsc.ine5605.claviculario.entidades.Veiculo;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
-import br.ufsc.ine5605.claviculario.telas.TelaVeiculos;
+import br.ufsc.ine5605.claviculario.zzantigos.telas.TelaVeiculos;
 import java.util.ArrayList;
 
 public class ControladorVeiculos{
