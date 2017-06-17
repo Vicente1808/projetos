@@ -8,16 +8,16 @@ package br.ufsc.ine5605.claviculario.telasGraficas;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -32,7 +32,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
     private JLabel lbDataNascimento;
     private JLabel lbTelefone;
     private JLabel lbCargo;
-    private JLabel  lbBloqueado;
+    private JLabel lbBloqueado;
     private JLabel infoTela;
         
     private JFormattedTextField matricula;
@@ -41,6 +41,8 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
     private JFormattedTextField telefone;
     private JComboBox cargo;
     private JCheckBox bloqueado;
+    private JButton cadastrar;
+    private JTextField cargoOutro;
     
     public TelaGraficaDadosFuncionario(){
         inicia();
@@ -56,12 +58,16 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbBloqueado = new JLabel();
         infoTela = new JLabel();
         
+        String[] cargos = {"Diretor","Outro"};
+        
         matricula = new JFormattedTextField();
         nome = new JTextField();
         dataNascimento = new JFormattedTextField();
         telefone = new JFormattedTextField();
-        cargo = new JComboBox();
+        cargo = new JComboBox(cargos);
         bloqueado = new JCheckBox();
+        cadastrar = new JButton();
+        cargoOutro = new JTextField();
         
         Container container = getContentPane();
         container.setLayout(null);
@@ -96,6 +102,9 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbCargo.setBounds(50, 250, 100, 50);
         
         cargo.setBounds(170, 260, 120, 25);
+        cargoOutro.setBounds(170, 300, 120, 25);
+        cargo.addActionListener(this);
+        cargo.setActionCommand("TROCACARGO");
         
         lbBloqueado.setText("Status:");      
         lbBloqueado.setBounds(50, 300, 100, 50);
@@ -103,14 +112,22 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         bloqueado.setText("Bloqueado");
         bloqueado.setBounds(170, 315, 120, 25);
         
-        JPanel painel = new JPanel();
+        cadastrar.setText("Cadastrar");
+        cadastrar.setBounds(50, 370, 120, 30);
+        cadastrar.addActionListener(this);
         
-        infoTela.setText("teste");
+        //infoTela.setText("Matricula invalida");
+        infoTela.setBounds(320, 370, 330, 25);
+        infoTela.setForeground(Color.red);
         
-        painel.setBounds(320, 60, 320, 300);
-        painel.setBackground(Color.white);
+        JTextArea painel = new JTextArea();
+ 
+        painel.setLineWrap(rootPaneCheckingEnabled);
         
         JScrollPane jscroll = new JScrollPane(painel);
+        
+        jscroll.setBounds(320, 60, 320, 300);
+        jscroll.setBackground(Color.white);
         
         container.add(lbTitulo);
         container.add(lbMatricula);
@@ -126,16 +143,50 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         container.add(telefone);
         container.add(cargo);
         container.add(bloqueado);
-        container.add(painel);
+        container.add(cadastrar);
+        container.add(jscroll);
         container.add(infoTela);
+        
+        
         
         setSize(680,460);
         setLocationRelativeTo(null);
+        
+        
+        if(cargo.getSelectedItem().toString().equals("Outro")){
+                
+                container.add(cargoOutro);
+            }
     }   
             
     
     @Override
     public void actionPerformed(ActionEvent ae) {
+        
+        if(ae.getActionCommand().equals("TROCACARGO")){
+            if(cargo.getSelectedItem().toString().equals("Outro")){                
+                getContentPane().add(cargoOutro);
+            }else{
+                getContentPane().remove(cargoOutro);
+            }
+        }
+        
+        if(ae.getSource() == cadastrar) {
+            if(matricula.getText().equals("")){
+                infoTela.setText("Campo Matrícula está em branco.");
+                repaint();
+            }else if(nome.getText().equals("")){
+                infoTela.setText("Campo nome está em branco.");
+                repaint();               
+            }else if(dataNascimento.getText().equals("")){
+                infoTela.setText("Campo data nascimento está em branco.");
+                repaint();     
+            }else if(telefone.getText().equals("")){
+                infoTela.setText("Campo telefone está em branco.");
+                repaint();                 
+            }
+            
+        }
         
     }
     
