@@ -151,7 +151,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
             }
             if(!excecao) {
                 if(ControladorFuncionarios.getInstance().validarMatricula(matricula)) {
-                    placas = ControladorFuncionarios.getInstance().getDadosFuncionario(matricula).funcionarios;                
+                    placas = ControladorFuncionarios.getInstance().getDadosFuncionario(matricula).veiculos;                
                 for(String placa : placas) {
                     cbm.addElement(placa);
                 } 
