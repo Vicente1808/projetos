@@ -5,11 +5,18 @@
  */
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
+import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,6 +26,10 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+import java.lang.Integer;
 
 /**
  *
@@ -34,8 +45,9 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
     private JLabel lbCargo;
     private JLabel lbBloqueado;
     private JLabel infoTela;
+    private JLabel veiculoPendente; 
         
-    private JFormattedTextField matricula;
+    private JFormattedTextField btMatricula;
     private JTextField nome;
     private JFormattedTextField dataNascimento;
     private JFormattedTextField telefone;
@@ -56,18 +68,37 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbTelefone = new JLabel();
         lbCargo = new JLabel();
         lbBloqueado = new JLabel();
+        veiculoPendente = new JLabel();
         infoTela = new JLabel();
         
         String[] cargos = {"Diretor","Outro"};
         
-        matricula = new JFormattedTextField();
+        
+        try {
+            btMatricula = new JFormattedTextField(new MaskFormatter("###.###.###.####"));
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
         nome = new JTextField();
-        dataNascimento = new JFormattedTextField();
-        telefone = new JFormattedTextField();
+        
+        try {
+            dataNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            telefone = new JFormattedTextField(new MaskFormatter("(##)#####-####"));
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cargo = new JComboBox(cargos);
         bloqueado = new JCheckBox();
         cadastrar = new JButton();
         cargoOutro = new JTextField();
+        
+//            
         
         Container container = getContentPane();
         container.setLayout(null);
@@ -81,7 +112,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbMatricula.setText("Matrícula:");
         lbMatricula.setBounds(50, 50, 100, 50);
         
-        matricula.setBounds(170, 60, 120, 25);
+        btMatricula.setBounds(170, 60, 120, 25);
         
         lbNome.setText("Nome:");
         lbNome.setBounds(50, 100, 100, 50);
@@ -102,15 +133,18 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         lbCargo.setBounds(50, 250, 100, 50);
         
         cargo.setBounds(170, 260, 120, 25);
-        cargoOutro.setBounds(170, 300, 120, 25);
         cargo.addActionListener(this);
         cargo.setActionCommand("TROCACARGO");
+        cargoOutro.setBounds(170, 290, 120, 25);
         
         lbBloqueado.setText("Status:");      
         lbBloqueado.setBounds(50, 300, 100, 50);
         
         bloqueado.setText("Bloqueado");
         bloqueado.setBounds(170, 315, 120, 25);
+        
+        veiculoPendente.setText("Veiculo Pendente:         AAA-1234");
+        veiculoPendente.setBounds(50, 340, 240, 25);
         
         cadastrar.setText("Cadastrar");
         cadastrar.setBounds(50, 370, 120, 30);
@@ -136,8 +170,9 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         container.add(lbTelefone);
         container.add(lbCargo);
         container.add(lbBloqueado);
+        container.add(veiculoPendente);
         
-        container.add(matricula);
+        container.add(btMatricula);
         container.add(nome);
         container.add(dataNascimento);
         container.add(telefone);
@@ -147,14 +182,10 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         container.add(jscroll);
         container.add(infoTela);
         
-        
-        
         setSize(680,460);
         setLocationRelativeTo(null);
         
-        
         if(cargo.getSelectedItem().toString().equals("Outro")){
-                
                 container.add(cargoOutro);
             }
     }   
@@ -172,22 +203,68 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         }
         
         if(ae.getSource() == cadastrar) {
-            if(matricula.getText().equals("")){
+            if(btMatricula.getText().equals("   .   .   .   ")){
                 infoTela.setText("Campo Matrícula está em branco.");
                 repaint();
             }else if(nome.getText().equals("")){
                 infoTela.setText("Campo nome está em branco.");
                 repaint();               
-            }else if(dataNascimento.getText().equals("")){
+            }else if(dataNascimento.getText().equals("  /  /    ")){
                 infoTela.setText("Campo data nascimento está em branco.");
                 repaint();     
-            }else if(telefone.getText().equals("")){
+            }else if(telefone.getText().equals("(  )     -    ")){
                 infoTela.setText("Campo telefone está em branco.");
                 repaint();                 
+            }else if(cargo.getSelectedItem().equals("Outro")&&cargoOutro.getText().equals("")){
+                infoTela.setText("Campo cargo está em branco.");
+                repaint(); 
+            }else{
+                int novaMatricula =0;
+                String mat = null;
+                
+                String[] dados = btMatricula.getText().split(".");
+                if(dados.length==4){
+                    for(int i=0; i < dados.length;i++){
+                        if(!(dados[i].equals(""))){
+                            mat = mat + dados[i];
+                        }
+                    }
+                    novaMatricula = Integer.parseInt(mat);        
+                }
+                
+                FuncionarioVO funcionarioVO = new FuncionarioVO();
+                funcionarioVO.matricula = novaMatricula;
+                funcionarioVO.nome = nome.getText();
+                
+                SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+ 
+                String data = dataNascimento.getText();
+                Calendar c = Calendar.getInstance();
+                try {
+                    c.setTime(formatoData.parse(data));
+                } catch (ParseException ex) {
+                    Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+                    infoTela.setText("Data nascimento inválida.");
+                    repaint();                     
+                }
+                
+                funcionarioVO.telefone = telefone.getText();
+                
+                if(cargo.getSelectedItem().equals("Outro")&&cargoOutro.getText().equals("")){
+                    funcionarioVO.cargo = cargoOutro.getText();
+                }else{
+                    funcionarioVO.cargo = cargo.getSelectedItem().toString();
+                }
+                
+                funcionarioVO.bloqueado = bloqueado.isBorderPaintedFlat();
+                funcionarioVO.veiculoPendente = null;
+                
+                infoTela.setText("Processando cadastro....");
+                
+                
             }
             
         }
-        
     }
     
 }
