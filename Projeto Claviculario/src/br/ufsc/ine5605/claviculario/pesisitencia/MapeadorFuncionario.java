@@ -6,6 +6,10 @@
 package br.ufsc.ine5605.claviculario.pesisitencia;
 
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -15,7 +19,7 @@ import java.util.HashMap;
  */
 public class MapeadorFuncionario {
     private final HashMap<Integer, Funcionario> listFuncionarios;
-    private final String filename = "funcionarios.cla";
+    private final String filename = "funcionarios.rtm";
     
     public MapeadorFuncionario(){
         listFuncionarios = new HashMap<>();
@@ -27,14 +31,35 @@ public class MapeadorFuncionario {
     }
     
     public void put(Funcionario funcionario){
-        //testar null
         listFuncionarios.put(funcionario.getMatricula(), funcionario);
         persist();
     }
-
-    private void persist() {
+    
+    private void load() {
         
     }
+
+
+    private void persist(){
+        try{
+        FileOutputStream saida = new FileOutputStream(filename);
+        ObjectOutputStream objetoSaida = new ObjectOutputStream(saida);
+        objetoSaida.writeObject(listFuncionarios);
+        
+        objetoSaida.flush();
+        saida.flush();
+        
+        objetoSaida=null;
+        saida=null;
+        
+        }catch(FileNotFoundException ex){
+            
+        }catch(IOException ex){
+            
+        }
+    }
+
+
 
     public void remove(Integer i) {
         
@@ -44,8 +69,6 @@ public class MapeadorFuncionario {
         return listFuncionarios.values();
     }
 
-    private void load() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }
