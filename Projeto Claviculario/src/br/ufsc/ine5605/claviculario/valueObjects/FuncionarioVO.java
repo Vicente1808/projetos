@@ -21,9 +21,9 @@ public class FuncionarioVO {
     public String cargo;
     public boolean bloqueado;
     public String veiculoPendente;
-    public ArrayList<String> funcionarios;
+    public ArrayList<String> veiculos;
     
     public FuncionarioVO() {
-        funcionarios = new ArrayList<>();
+        veiculos = new ArrayList<>();
     }
 }
