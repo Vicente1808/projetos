@@ -4,8 +4,9 @@ package br.ufsc.ine5605.claviculario.controladores;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.enums.MensagemAcessoNegacao;
 import br.ufsc.ine5605.claviculario.enums.RetiradaEDevolucao;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentos;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDevolucao;
-import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaGerenciamento;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentoFuncionario;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaPrincipalGrafica;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaRetiradaVeiculo;
 import java.util.Calendar;
@@ -18,18 +19,19 @@ import java.text.DateFormat;
 public class ControladorPrincipal {
     //Atributos
     private static ControladorPrincipal instance; 
-
     private final TelaPrincipalGrafica telaPrincipal;
     private final TelaGraficaDevolucao telaDevolucao;
     private final TelaRetiradaVeiculo telaRetirada;
-    private final TelaGraficaGerenciamento telaGerenciamento;
+    private final TelaGerenciamentos telaGerenciamentos;
+    private final TelaGerenciamentoFuncionario telaGereciamentoFuncionarios;
     
     //Construtor
     private ControladorPrincipal(){
         telaPrincipal = new TelaPrincipalGrafica(this);
         telaDevolucao = new TelaGraficaDevolucao(this);
         telaRetirada = new TelaRetiradaVeiculo(this);
-        telaGerenciamento = new TelaGraficaGerenciamento(this);
+        telaGerenciamentos = new TelaGerenciamentos(this);
+        this.telaGereciamentoFuncionarios = new TelaGerenciamentoFuncionario(this);
     }
     
     //Métodos Operacionais
@@ -45,26 +47,26 @@ public class ControladorPrincipal {
             placa = null;
             ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.MATRICULAINVALIDA);
             retornoRetirada = RetiradaEDevolucao.MATRICULAINCORRETA;
-        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).isBloqueado()){
+        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).bloqueado){
                     placa = null;
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.FUNCIONARIOBLOQUEADO);
                     retornoRetirada = RetiradaEDevolucao.USUARIOBLOQUEADO;
-        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente() != null){
-            placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente();
+        }else if(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculoPendente!= null){
+            placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculoPendente;
             ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.VEICULOPENDENTE);
             retornoRetirada = RetiradaEDevolucao.VEICULOPENDENTE;
 
-        }else if((ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==0)&& !(ControladorFuncionarios.getInstance().getFuncionario(matricula).getCargo().equals(EntradaSaida.DIRETOR.getMensagem()))){
+        }else if((ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==0)&& !(ControladorFuncionarios.getInstance().getFuncionario(matricula).cargo.equals(EntradaSaida.DIRETOR.getMensagem()))){
                 placa =null;
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.SEMVEICULOSASSOCIADOS);
                 retornoRetirada = RetiradaEDevolucao.SEMVEICULOS;
                 
         }else if(ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==1){
-                placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos().get(0);
+                placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos.get(0);
                 if(ControladorVeiculos.getInstance().getVeiculo(placa).isChaveClaviculario()){
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSOPERMITIDO);
                     ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(false);
-                    ControladorFuncionarios.getInstance().getFuncionario(matricula).setVeiculoPendente(placa);
+                    ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
                                     
                 }else{
                     retornoRetirada = RetiradaEDevolucao.VEICULOINDISPONIVEL;
@@ -74,20 +76,20 @@ public class ControladorPrincipal {
             int contador = 0;
             boolean resposta = false;
             do{
-                if(!validarVeiculoDeFuncionario(matricula, placa) && !(ControladorFuncionarios.getInstance().getFuncionario(matricula).getCargo().equals(EntradaSaida.DIRETOR.getMensagem()))){
+                if(!validarVeiculoDeFuncionario(matricula, placa) && !(ControladorFuncionarios.getInstance().getFuncionario(matricula).cargo.equals(EntradaSaida.DIRETOR.getMensagem()))){
                     contador++;
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSONEGADOAOVEICULO);
                 }
             }while(contador < 3 && (resposta));
             if(contador == 3){
-                ControladorFuncionarios.getInstance().getFuncionario(matricula).setBloqueado(true);
+                ControladorFuncionarios.getInstance().bloquearFuncionario(matricula);
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.FUNCIONARIOBLOQUEADO);
                 retornoRetirada = RetiradaEDevolucao.USUARIOBLOQUEADO;
             }
             if(ControladorVeiculos.getInstance().getVeiculo(placa).isChaveClaviculario()){
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSOPERMITIDO);
                 ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(false);
-                ControladorFuncionarios.getInstance().getFuncionario(matricula).setVeiculoPendente(placa);
+                ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
                 retornoRetirada = RetiradaEDevolucao.VEICULORETIRADO;
             }else{
                 retornoRetirada = RetiradaEDevolucao.VEICULOINDISPONIVEL;
@@ -103,10 +105,10 @@ public class ControladorPrincipal {
         RetiradaEDevolucao retorno = RetiradaEDevolucao.VEICULODEVOLVIDO;
         
         if(ControladorFuncionarios.getInstance().validarMatricula(matricula) && ControladorVeiculos.getInstance().validarPlaca(placa)) {
-            if(ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculoPendente().equals(placa)) {
+            if(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculoPendente.equals(placa)) {
                 ControladorVeiculos.getInstance().getVeiculo(placa).setKmAtual(kmAtual);
                 ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(true);
-                ControladorFuncionarios.getInstance().getFuncionario(matricula).setVeiculoPendente(null);
+                ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
                 ControladorRegistros.getInstance().registrarDevolucao(matricula, placa, Calendar.getInstance().getTime());
             } else {
                 retorno = RetiradaEDevolucao.VEICULONAOASSOCIADO;
@@ -117,8 +119,8 @@ public class ControladorPrincipal {
         return retorno;
     }
     
-    public void carregarMenuPrincipal(){
-        telaGerenciamento.setVisible(false);
+    public void carregarTelaPrincipal(){
+        telaGerenciamentos.setVisible(false);
         telaDevolucao.setVisible(false);
         telaRetirada.setVisible(false);
         telaPrincipal.setVisible(true);
@@ -126,22 +128,26 @@ public class ControladorPrincipal {
     
     public void carregarMenuRetirada() {
         telaPrincipal.setVisible(false);
-        telaGerenciamento.setVisible(false);
+        telaGerenciamentos.setVisible(false);
         telaDevolucao.setVisible(false);
         telaRetirada.setVisible(true);
     }
     
     public void carregarMenuDevolucao() {
         telaPrincipal.setVisible(false);
-        telaGerenciamento.setVisible(false);
+        telaGerenciamentos.setVisible(false);
         telaRetirada.setVisible(false);
         telaDevolucao.setVisible(true);
     }
     
     public void carregarMenuGerenciamento(){
         telaRetirada.setVisible(false);
-        telaPrincipal.setVisible(false);
-        telaGerenciamento.setVisible(true);
+        telaPrincipal.setVisible(true);
+        telaGerenciamentos.setVisible(true);
+    }
+    
+    public void carregaTelaGerenciamentoFuncionarios(){
+        telaGereciamentoFuncionarios.setVisible(true);
     }
     
     public void carregarMenuRegistros(){
@@ -153,7 +159,7 @@ public class ControladorPrincipal {
     }
     
     public boolean validarVeiculoDeFuncionario(int matricula, String placa){
-        return ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos().contains(placa);
+        return ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos.contains(placa);
     }
     
     //public void exibirDadosVeiculo(String placa){
@@ -161,7 +167,7 @@ public class ControladorPrincipal {
    // }
     
     public void getVeiculosAutorizados(int matricula){
-        ControladorVeiculos.getInstance().exbirListaVeiculosFuncionario(ControladorFuncionarios.getInstance().getFuncionario(matricula).getVeiculos());
+        ControladorVeiculos.getInstance().exbirListaVeiculosFuncionario(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos);
    }
     
     public boolean validarPlaca(String placa){

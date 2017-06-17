@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufsc.ine5605.claviculario.pesisitencia;
+package br.ufsc.ine5605.claviculario.persistencia;
 
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ public class MapeadorFuncionarios {
     
     private static MapeadorFuncionarios instance;
     private HashMap<Integer, Funcionario> cacheFuncionarios;
-    private final String filename = "src/funcionario.txt";
+    private final String filename = "src/funcionario54.txt";
     
     private MapeadorFuncionarios(){
         cacheFuncionarios = new HashMap<>();

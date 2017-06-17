@@ -23,9 +23,9 @@ import javax.swing.JTable;
  *
  * @author pablo
  */
-public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
+public class TelaGerenciamentoFuncionario extends JFrame implements ActionListener{
     
-    private final ControladorPrincipal ctrl;
+    private final ControladorPrincipal controladorPrincipal;
     
     private JLabel titulo;
     private JButton btNovo;
@@ -36,9 +36,9 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
     private JTable listaFuncionarios;
     private TableModelPessoal tableModel;
     
-    public TelaGraficaGerenciamento(ControladorPrincipal owner){
+    public TelaGerenciamentoFuncionario(ControladorPrincipal controladorPrincipal){
         super("Gerenciamento De Funcionários");
-        ctrl = owner;
+        this.controladorPrincipal = controladorPrincipal;
         inicia();
     }
     
@@ -102,13 +102,20 @@ public class TelaGraficaGerenciamento extends JFrame implements ActionListener{
         
         setSize(720, 620);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation();
+        //ctrl.carregarMenuPrincipal();
     }
+    
+    //public void updateTable(){
+        //tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
+        //this.repaint();
+    //}
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
             ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Novo Funcionario");
+         
         }else{
             
         }

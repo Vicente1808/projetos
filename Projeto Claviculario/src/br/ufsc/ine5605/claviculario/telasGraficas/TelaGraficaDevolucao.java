@@ -150,7 +150,7 @@ public class TelaGraficaDevolucao extends JFrame implements ActionListener {
                     mensagemRetorno = RetiradaEDevolucao.MATRICULAINCORRETA.getMensagem();
                 } else {
                     matriculaUsuarioConectado = matricula;
-                    funcionarioVO = ControladorFuncionarios.getInstance().getDadosFuncionario(matricula);
+                    funcionarioVO = ControladorFuncionarios.getInstance().getFuncionario(matricula);
                     if(funcionarioVO.veiculoPendente == null) {
                         mensagemRetorno = "Nenhum veiculo pendente";
                     } else {
@@ -183,7 +183,7 @@ public class TelaGraficaDevolucao extends JFrame implements ActionListener {
             lbEvento.setText(mensagemRetorno);
             matriculaUsuarioConectado = null;
         } else if(e.getSource() == btVoltar) {
-            ctrl.carregarMenuPrincipal();
+            ctrl.carregarTelaPrincipal();
         }
     }
     

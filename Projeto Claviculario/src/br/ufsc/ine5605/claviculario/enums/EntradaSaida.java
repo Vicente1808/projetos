@@ -32,7 +32,9 @@ public enum EntradaSaida {
     FUNCIONARIOEHDIRETOR("O diretor cadastrado tem acesso a todos os veiculos!"),
     VEICULONAOASSOCIADO("Funcionário não possui veículo associado"),
     DIRETOR("DIRETOR"),
-    PERGUNTA3("Deseja retirar permissão deste funcionário retirar um determinado veiculo");
+    PERGUNTA3("Deseja retirar permissão deste funcionário retirar um determinado veiculo"),
+    ARQUIVONAOENCONTRADO("ERROR 404, FILE NOT FOUND"),
+    OBJECTO("An error was encountered in time to save the information. Object not found.");
     
     private final String mensagem;
     

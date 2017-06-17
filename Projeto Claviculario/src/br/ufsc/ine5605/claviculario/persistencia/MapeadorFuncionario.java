@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufsc.ine5605.claviculario.pesisitencia;
+package br.ufsc.ine5605.claviculario.persistencia;
 
-import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
-import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,7 +22,7 @@ import java.util.HashMap;
  */
 public class MapeadorFuncionario {
     private HashMap<Integer, Funcionario> listaFuncionarios;
-    private final String filename = "files/funcionarios.rtm";
+    private final String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files";
     
     public MapeadorFuncionario(){
         listaFuncionarios = new HashMap<>();
@@ -75,14 +74,16 @@ public class MapeadorFuncionario {
         saida=null;
         
         }catch(FileNotFoundException ex){
-            ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.ARQUIVONAOENCONTRADO.getMensagem());
+            System.out.println(ex);
+            //ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.ARQUIVONAOENCONTRADO.getMensagem());
         }catch(IOException ex){
-            ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.OBJECTO.getMensagem());
+            System.out.println(ex);
+            //ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.OBJECTO.getMensagem());
         }
     }
 
-    public void remove(Funcionario funcionario) {
-        listaFuncionarios.remove(funcionario.getMatricula(), funcionario);
+    public void remove(Integer matricula) {
+        listaFuncionarios.remove(matricula);
     }
 
     public Collection<Funcionario> getList() {

@@ -131,7 +131,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btEnviarMatricula) {
             
-            matriculaUsuarioConectado = null;
+            //matriculaUsuarioConectado = null;
             lbEvento.setText(null);
             cbVeiculosDisponiveis.removeAllItems();
             
@@ -151,7 +151,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
             }
             if(!excecao) {
                 if(ControladorFuncionarios.getInstance().validarMatricula(matricula)) {
-                    placas = ControladorFuncionarios.getInstance().getDadosFuncionario(matricula).veiculos;                
+                    placas = ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos;                
                 for(String placa : placas) {
                     cbm.addElement(placa);
                 } 
@@ -175,7 +175,7 @@ public class TelaRetiradaVeiculo extends JFrame implements ActionListener {
                 lbEvento.setText(mensagemRetorno.getMensagem());
             } 
         } else if(e.getSource() == btVoltar) {
-            ctrl.carregarMenuPrincipal();
+            ctrl.carregarTelaPrincipal();
         }
     }
 

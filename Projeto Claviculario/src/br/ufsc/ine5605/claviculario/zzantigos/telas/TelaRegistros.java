@@ -1,5 +1,5 @@
 
-package br.ufsc.ine5605.claviculario.telas;
+package br.ufsc.ine5605.claviculario.zzantigos.telas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.claviculario.controladores.ControladorRegistros;
@@ -58,7 +58,7 @@ public class TelaRegistros {
                     this.exibirTelaPesquisaAcesso();
                     break;
                 case 0:
-                    ControladorPrincipal.getInstance().carregarMenuPrincipal();
+                    ControladorPrincipal.getInstance().carregarTelaPrincipal();
                     break;    
             
         }    

@@ -1,5 +1,5 @@
 
-package br.ufsc.ine5605.claviculario.telas;
+package br.ufsc.ine5605.claviculario.zzantigos.telas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
@@ -75,7 +75,7 @@ public class TelaPrincipal {
         //System.out.println(ControladorPrincipal.getInstance().retirarVeiculo().getMensagem());
         
         
-        ControladorPrincipal.getInstance().carregarMenuPrincipal();
+        ControladorPrincipal.getInstance().carregarTelaPrincipal();
     }
     
     public void exibirTelaDevolucaoVeiculo(){

@@ -1,5 +1,5 @@
 
-package br.ufsc.ine5605.claviculario.telas;
+package br.ufsc.ine5605.claviculario.zzantigos.telas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
@@ -159,7 +159,7 @@ public class TelaFuncionarios {
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("========================= Funcionario Cadastrados =========================");
         System.out.println("---------------------------------------------------------------------------");
-        ControladorFuncionarios.getInstance().exibirDadosDeTodosFuncionarios();
+        //ControladorFuncionarios.getInstance().exibirDadosDeTodosFuncionarios();
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
     }
     

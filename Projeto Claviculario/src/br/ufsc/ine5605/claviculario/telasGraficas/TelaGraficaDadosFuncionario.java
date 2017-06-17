@@ -5,13 +5,13 @@
  */
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
+import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,10 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-import java.lang.Integer;
 
 /**
  *
@@ -37,6 +34,7 @@ import java.lang.Integer;
  */
 public class TelaGraficaDadosFuncionario extends JFrame implements ActionListener{
     
+    private ControladorFuncionarios controladorFuncionarios;
     private JLabel lbTitulo;
     private JLabel lbMatricula;
     private JLabel lbNome;
@@ -56,7 +54,8 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
     private JButton cadastrar;
     private JTextField cargoOutro;
     
-    public TelaGraficaDadosFuncionario(){
+    public TelaGraficaDadosFuncionario(ControladorFuncionarios controladorFuncionarios){
+        this.controladorFuncionarios = controladorFuncionarios;
         inicia();
     }
     
@@ -75,7 +74,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         
         
         try {
-            btMatricula = new JFormattedTextField(new MaskFormatter("###.###.###.####"));
+            btMatricula = new JFormattedTextField(new MaskFormatter("######"));
         } catch (ParseException ex) {
             Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
        }
@@ -97,8 +96,6 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         bloqueado = new JCheckBox();
         cadastrar = new JButton();
         cargoOutro = new JTextField();
-        
-//            
         
         Container container = getContentPane();
         container.setLayout(null);
@@ -203,7 +200,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         }
         
         if(ae.getSource() == cadastrar) {
-            if(btMatricula.getText().equals("   .   .   .   ")){
+            if(btMatricula.getText().equals("")){
                 infoTela.setText("Campo Matrícula está em branco.");
                 repaint();
             }else if(nome.getText().equals("")){
@@ -219,6 +216,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
                 infoTela.setText("Campo cargo está em branco.");
                 repaint(); 
             }else{
+                /*
                 int novaMatricula =0;
                 String mat = null;
                 
@@ -231,9 +229,9 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
                     }
                     novaMatricula = Integer.parseInt(mat);        
                 }
-                
+                */
                 FuncionarioVO funcionarioVO = new FuncionarioVO();
-                funcionarioVO.matricula = novaMatricula;
+                funcionarioVO.matricula = Integer.parseInt(btMatricula.getText());
                 funcionarioVO.nome = nome.getText();
                 
                 SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
@@ -260,6 +258,8 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
                 funcionarioVO.veiculoPendente = null;
                 
                 infoTela.setText("Processando cadastro....");
+                
+                infoTela.setText(controladorFuncionarios.cadastrarFuncionario(funcionarioVO));
                 
                 
             }

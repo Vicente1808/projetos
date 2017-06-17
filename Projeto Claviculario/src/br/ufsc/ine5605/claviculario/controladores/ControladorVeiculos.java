@@ -125,7 +125,7 @@ public class ControladorVeiculos{
         telaVeiculos.exibeMenu();
     }
     public void carregarMenuPrincipal(){
-        ControladorPrincipal.getInstance().carregarMenuPrincipal();
+        ControladorPrincipal.getInstance().carregarTelaPrincipal();
     }    
 
     public ArrayList<Veiculo> getVeiculos() {

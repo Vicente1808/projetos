@@ -1,5 +1,5 @@
 
-package br.ufsc.ine5605.claviculario.telas;
+package br.ufsc.ine5605.claviculario.zzantigos.telas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
