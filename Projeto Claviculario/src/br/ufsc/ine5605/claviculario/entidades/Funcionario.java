@@ -1,5 +1,6 @@
 package br.ufsc.ine5605.claviculario.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -7,7 +8,7 @@ import java.util.Calendar;
  *  
  * @author pablo
  */
-public class Funcionario {
+public class Funcionario implements Serializable{
     	private final int matricula;
 	private String nome;
 	private Calendar dataNascimento;
