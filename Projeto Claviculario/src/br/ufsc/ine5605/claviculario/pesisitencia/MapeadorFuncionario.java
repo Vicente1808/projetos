@@ -14,17 +14,21 @@ import java.util.HashMap;
  * @author pablo
  */
 public class MapeadorFuncionario {
-    private final HashMap<Integer, Funcionario> cacheFuncionarios;
-    private final String filename = "funcionario.cla";
+    private final HashMap<Integer, Funcionario> listFuncionarios;
+    private final String filename = "funcionarios.cla";
     
     public MapeadorFuncionario(){
-        cacheFuncionarios = new HashMap<>();
+        listFuncionarios = new HashMap<>();
         load();
     }  
     
+    public Funcionario get(Integer matricula) {
+        return listFuncionarios.get(matricula);
+    }
+    
     public void put(Funcionario funcionario){
         //testar null
-        cacheFuncionarios.put(funcionario.getMatricula(), funcionario);
+        listFuncionarios.put(funcionario.getMatricula(), funcionario);
         persist();
     }
 
@@ -32,16 +36,12 @@ public class MapeadorFuncionario {
         
     }
 
-    public Funcionario get(Integer matricula) {
-        return cacheFuncionarios.get(matricula);
-    }
-
     public void remove(Integer i) {
         
     }
 
     public Collection<Funcionario> getList() {
-        return cacheFuncionarios.values();
+        return listFuncionarios.values();
     }
 
     private void load() {
