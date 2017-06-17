@@ -5,10 +5,14 @@
  */
 package br.ufsc.ine5605.claviculario.pesisitencia;
 
+import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
+import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,25 +22,43 @@ import java.util.HashMap;
  * @author pablo
  */
 public class MapeadorFuncionario {
-    private final HashMap<Integer, Funcionario> listFuncionarios;
-    private final String filename = "funcionarios.rtm";
+    private HashMap<Integer, Funcionario> listaFuncionarios;
+    private final String filename = "files/funcionarios.rtm";
     
     public MapeadorFuncionario(){
-        listFuncionarios = new HashMap<>();
+        listaFuncionarios = new HashMap<>();
         load();
     }  
     
     public Funcionario get(Integer matricula) {
-        return listFuncionarios.get(matricula);
+        return listaFuncionarios.get(matricula);
     }
     
     public void put(Funcionario funcionario){
-        listFuncionarios.put(funcionario.getMatricula(), funcionario);
+        listaFuncionarios.put(funcionario.getMatricula(), funcionario);
         persist();
     }
     
     private void load() {
+        try{
+        FileInputStream entrada = new FileInputStream(filename);
+        ObjectInputStream objetoEntrada = new ObjectInputStream(entrada);
         
+        this.listaFuncionarios = (HashMap<Integer, Funcionario>) objetoEntrada.readObject();
+        
+        objetoEntrada.close();
+        entrada.close();
+        
+        objetoEntrada = null;
+        entrada = null;
+        
+        }catch(ClassNotFoundException ae){
+            System.out.println(ae);
+        }catch(FileNotFoundException ae){
+            System.out.println(ae);
+        }catch(IOException ae){
+            System.out.println(ae);
+        }
     }
 
 
@@ -44,7 +66,7 @@ public class MapeadorFuncionario {
         try{
         FileOutputStream saida = new FileOutputStream(filename);
         ObjectOutputStream objetoSaida = new ObjectOutputStream(saida);
-        objetoSaida.writeObject(listFuncionarios);
+        objetoSaida.writeObject(listaFuncionarios);
         
         objetoSaida.flush();
         saida.flush();
@@ -53,22 +75,18 @@ public class MapeadorFuncionario {
         saida=null;
         
         }catch(FileNotFoundException ex){
-            
+            ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.ARQUIVONAOENCONTRADO.getMensagem());
         }catch(IOException ex){
-            
+            ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.OBJECTO.getMensagem());
         }
     }
 
-
-
-    public void remove(Integer i) {
-        
+    public void remove(Funcionario funcionario) {
+        listaFuncionarios.remove(funcionario.getMatricula(), funcionario);
     }
 
     public Collection<Funcionario> getList() {
-        return listFuncionarios.values();
+        return listaFuncionarios.values();
     }
 
-
-    
 }
