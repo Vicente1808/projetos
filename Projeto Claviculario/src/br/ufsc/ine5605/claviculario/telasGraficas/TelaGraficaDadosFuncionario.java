@@ -78,7 +78,7 @@ public class TelaGraficaDadosFuncionario extends JFrame implements ActionListene
         } catch (ParseException ex) {
             Logger.getLogger(TelaGraficaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
        }
-        
+        btMatricula.setText("");
         nome = new JTextField();
         
         try {

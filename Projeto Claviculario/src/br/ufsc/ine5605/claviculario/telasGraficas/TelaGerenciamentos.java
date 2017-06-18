@@ -65,9 +65,9 @@ public class TelaGerenciamentos extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource()==btFuncionarios){
-            ControladorPrincipal.getInstance().carregaTelaGerenciamentoFuncionarios();
+            ControladorPrincipal.getInstance().carregarTelaGerenciamentoFuncionarios();
         }else if(ae.getSource()==btVeiculos){
-            
+            ControladorPrincipal.getInstance().carregarTelaGerenciamentoVeiculos();
         }else if(ae.getSource()==btRegistros){
             
         }
