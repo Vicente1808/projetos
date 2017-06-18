@@ -40,7 +40,7 @@ public class ControladorVeiculos{
         telaDadosVeiculo.setTitle("Atualização Cadastro De Veiculo");
         telaDadosVeiculo.trocarBotao("Atualizar");
         telaDadosVeiculo.limparTela();
-        telaDadosVeiculo.alterarEdicao(false);
+        telaDadosVeiculo.alterarEdicao(true);
         telaDadosVeiculo.setVisible(true);
     }
     
