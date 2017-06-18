@@ -4,7 +4,6 @@ import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorFuncionario;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
-import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentoFuncionario;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class ControladorFuncionarios{
         
     //Contrutor
     private ControladorFuncionarios(){
-        telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario(this);
+        this.telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario(this);
         this.mapeadorFuncionario = new MapeadorFuncionario();
         //this.telaGraficaGerenciamentoFuncionario = new TelaGerenciamentoFuncionario(this);
     }
@@ -110,9 +109,10 @@ public class ControladorFuncionarios{
         return retornoCadastro;
     }
     
-    public void atribuirVeiculoPendente(int matricula, String placa ){
+    public void alterarVeiculoPendente(int matricula, String placa ){
         mapeadorFuncionario.get(matricula).setVeiculoPendente(placa);
     }
+    
     
     public void bloquearFuncionario(int matricula){
         mapeadorFuncionario.get(matricula).setBloqueado(true);
