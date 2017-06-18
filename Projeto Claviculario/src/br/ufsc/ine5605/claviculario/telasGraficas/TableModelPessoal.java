@@ -58,6 +58,7 @@ public class TableModelPessoal extends AbstractTableModel{
             data[index][5] = lista.get(chave).bloqueado;
             index++;
         }
+        
     }
-
+    
 }
