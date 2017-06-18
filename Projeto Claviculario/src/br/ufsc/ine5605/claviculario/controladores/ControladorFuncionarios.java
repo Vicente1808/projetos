@@ -33,8 +33,8 @@ public class ControladorFuncionarios{
     }
     //Metodos Operacionais
 
-    public void atualizarTabelaFuncionarios(){
-        
+    public HashMap getVeiculos(){
+        return ControladorPrincipal.getInstance().getListaVeiculos();
     }
     
     public boolean validarMatricula(int matricula){
