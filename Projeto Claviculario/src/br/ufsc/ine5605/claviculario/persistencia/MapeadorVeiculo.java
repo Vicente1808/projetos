@@ -20,7 +20,7 @@ import java.util.HashMap;
  * @author pablo
  */
 public class MapeadorVeiculo {
-    private HashMap<Integer, Veiculo> listaVeiculos;
+    private HashMap<String, Veiculo> listaVeiculos;
     private String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files/veiculo.rtm";
     
     public MapeadorVeiculo(){
@@ -33,11 +33,7 @@ public class MapeadorVeiculo {
     }
     
     public void put(Veiculo veiculo){
-        //String[] dados = veiculo.getPlaca().split("-");
-        //int parte1 = Integer.parseInt(dados[0]);
-        //idPlaca;
         listaVeiculos.put(veiculo.getPlaca(),veiculo);
-        
         persist();
     }
     
@@ -46,7 +42,7 @@ public class MapeadorVeiculo {
             FileInputStream entrada = new FileInputStream(filename);
             ObjectInputStream objetoEntrada = new ObjectInputStream(entrada);
 
-            this.listaVeiculos = (HashMap<Integer,Veiculo>) objetoEntrada.readObject();
+            this.listaVeiculos = (HashMap<String,Veiculo>) objetoEntrada.readObject();
 
             objetoEntrada.close();
             entrada.close();
