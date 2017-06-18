@@ -13,6 +13,7 @@ import br.ufsc.ine5605.claviculario.telasGraficas.principal.TelaRetiradaVeiculo;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 /**
@@ -158,8 +159,8 @@ public class ControladorPrincipal {
         telaGerenciamentoVeiculos.setVisible(true);
     }
     
-    public HashMap getListaVeiculos(){
-        return ControladorVeiculos.getInstance().getVeiculos();
+    public String[][] getListaVeiculosSimples(){
+        return ControladorVeiculos.getInstance().getVeiculosSimples();
     }
     
     public void carregarMenuRegistros(){
