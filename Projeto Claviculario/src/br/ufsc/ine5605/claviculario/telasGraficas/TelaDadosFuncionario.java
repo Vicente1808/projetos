@@ -24,9 +24,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
@@ -150,9 +151,10 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         infoTela.setBounds(320, 370, 330, 25);
         infoTela.setForeground(Color.red);
         
-        JTextArea painel = new JTextArea();
- 
-        painel.setLineWrap(rootPaneCheckingEnabled);
+        String[][] placas = ControladorFuncionarios.getInstance().getVeiculosSimples();
+        JList painel = new JList();
+        
+        //painel.setLineWrap(rootPaneCheckingEnabled);
         
         JScrollPane jscroll = new JScrollPane(painel);
         
