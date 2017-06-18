@@ -81,7 +81,7 @@ public class MapeadorVeiculo {
         listaVeiculos.remove(placa);
     }
         
-    public Collection getList(){
+    public Collection<Veiculo> getList(){
         return listaVeiculos.values();
     }
 }
