@@ -108,7 +108,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
-            ControladorVeiculos.getInstance().carregarTelaDadosVeiculo("NOVO VEICULO");
+            ControladorVeiculos.getInstance().carregarTelaDadosVeiculo("Novo Veiculo");
         }
     }
     
