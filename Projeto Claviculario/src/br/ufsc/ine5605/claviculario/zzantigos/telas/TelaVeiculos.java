@@ -70,8 +70,8 @@ public class TelaVeiculos {
         System.out.println("=========================== Cadastrando Veiculos ==========================");
         System.out.println("---------------------------------------------------------------------------");
         
-        System.out.println(ControladorVeiculos.getInstance().cadastrarVeiculo());
-        ControladorVeiculos.getInstance().carregarMenuVeiculos();
+        //System.out.println(ControladorVeiculos.getInstance().cadastrarVeiculo());
+        //ControladorVeiculos.getInstance().carregarMenuVeiculos();
     }
 
     private void exibirTelaExclusaoVeiculo(){
@@ -80,8 +80,8 @@ public class TelaVeiculos {
         System.out.println("---------------------------------------------------------------------------");
         
         //String placa = pedePlacaVeiculo();
-        System.out.println(ControladorVeiculos.getInstance().excluirVeiculo());
-        ControladorVeiculos.getInstance().carregarMenuVeiculos();
+       // System.out.println(ControladorVeiculos.getInstance().excluirVeiculo());
+        //ControladorVeiculos.getInstance().carregarMenuVeiculos();
     }
 
     private void exibirTelaAtualizacaoVeiculo() {
@@ -89,8 +89,8 @@ public class TelaVeiculos {
             System.out.println("======================= Atualizar Cadastro Veculo =========================");
             System.out.println("---------------------------------------------------------------------------");
             //pedePlacaVeiculo();
-            System.out.println(ControladorVeiculos.getInstance().atualizarCadastroVeiculo());
-            ControladorVeiculos.getInstance().carregarMenuVeiculos();
+            //System.out.println(ControladorVeiculos.getInstance().atualizarCadastroVeiculo());
+            //ControladorVeiculos.getInstance().carregarMenuVeiculos();
     }
     
     private void exibirTelaIConsultaVeiculo() {
@@ -98,10 +98,10 @@ public class TelaVeiculos {
         System.out.println("========================== Pesquisando Veiculo ============================");
         System.out.println("---------------------------------------------------------------------------");
         String placa = pedePlacaVeiculo();
-        if(ControladorVeiculos.getInstance().exibirDadosVeiculo(placa)){
-            System.out.println(EntradaSaida.PLACAINEXISTENTE.getMensagem());
-        }
-        ControladorVeiculos.getInstance().carregarMenuVeiculos();
+        //if(ControladorVeiculos.getInstance().exibirDadosVeiculo(placa)){
+            //System.out.println(EntradaSaida.PLACAINEXISTENTE.getMensagem());
+       /// }
+        //ControladorVeiculos.getInstance().carregarMenuVeiculos();
     }
     
     public void exibirDadosDeVeiculos(String infoVeiculo){
@@ -119,8 +119,8 @@ public class TelaVeiculos {
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("========================== Veiculos Cadastrados ===========================");
         System.out.println("---------------------------------------------------------------------------");
-        ControladorVeiculos.getInstance().exibirDadosTodosVeiculos();
-        ControladorVeiculos.getInstance().carregarMenuVeiculos();
+       // ControladorVeiculos.getInstance().exibirDadosTodosVeiculos();
+        //ControladorVeiculos.getInstance().carregarMenuVeiculos();
     }
 
     public String pedePlacaVeiculo(){
