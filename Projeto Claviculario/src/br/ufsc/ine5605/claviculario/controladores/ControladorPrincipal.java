@@ -13,6 +13,8 @@ import br.ufsc.ine5605.claviculario.telasGraficas.principal.TelaRetiradaVeiculo;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
+import java.util.Collection;
+import java.util.HashMap;
 /**
  *
  * @author Pablo Vicente
@@ -154,6 +156,10 @@ public class ControladorPrincipal {
     
     public void carregarTelaGerenciamentoVeiculos(){
         telaGerenciamentoVeiculos.setVisible(true);
+    }
+    
+    public HashMap getListaVeiculos(){
+        return ControladorVeiculos.getInstance().getVeiculos();
     }
     
     public void carregarMenuRegistros(){
