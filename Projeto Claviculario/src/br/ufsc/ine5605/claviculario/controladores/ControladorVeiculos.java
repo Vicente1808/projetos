@@ -16,7 +16,7 @@ public class ControladorVeiculos{
     
     private ControladorVeiculos(){
         this.mapeadorVeiculo = new MapeadorVeiculo();
-        this.telaDadosVeiculo = new TelaDadosVeiculo();
+        this.telaDadosVeiculo = new TelaDadosVeiculo(this);
     }
     
     public void carregarTelaCadastroVeiculo(){

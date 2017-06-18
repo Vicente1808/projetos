@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class MapeadorVeiculo {
     private HashMap<String, Veiculo> listaVeiculos;
-    private String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files/veiculo.rtm";
+    private String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files/veiculos.rtm";
     
     public MapeadorVeiculo(){
         listaVeiculos = new HashMap<>();
