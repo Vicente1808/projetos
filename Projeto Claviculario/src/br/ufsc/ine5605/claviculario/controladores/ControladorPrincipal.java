@@ -7,6 +7,7 @@ import br.ufsc.ine5605.claviculario.enums.RetiradaEDevolucao;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentos;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDevolucao;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentoFuncionario;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaGerenciamentoVeiculos;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaPrincipalGrafica;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaRetiradaVeiculo;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ public class ControladorPrincipal {
     private final TelaRetiradaVeiculo telaRetirada;
     private final TelaGerenciamentos telaGerenciamentos;
     private final TelaGerenciamentoFuncionario telaGereciamentoFuncionarios;
+    private final TelaGerenciamentoVeiculos telaGerenciamentoVeiculos;
     
     //Construtor
     private ControladorPrincipal(){
@@ -32,6 +34,7 @@ public class ControladorPrincipal {
         telaRetirada = new TelaRetiradaVeiculo(this);
         telaGerenciamentos = new TelaGerenciamentos(this);
         this.telaGereciamentoFuncionarios = new TelaGerenciamentoFuncionario(this);
+        this.telaGerenciamentoVeiculos = new TelaGerenciamentoVeiculos(this);
     }
     
     //Métodos Operacionais
@@ -146,8 +149,12 @@ public class ControladorPrincipal {
         telaGerenciamentos.setVisible(true);
     }
     
-    public void carregaTelaGerenciamentoFuncionarios(){
+    public void carregarTelaGerenciamentoFuncionarios(){
         telaGereciamentoFuncionarios.setVisible(true);
+    }
+    
+    public void carregarTelaGerenciamentoVeiculos(){
+        telaGerenciamentoVeiculos.setVisible(true);
     }
     
     public void carregarMenuRegistros(){
