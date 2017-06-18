@@ -201,28 +201,11 @@ public class ControladorFuncionarios{
         HashMap<Integer, FuncionarioVO> funcionariosVO = new HashMap<>();
         
         for(Funcionario funcionario : mapeadorFuncionario.getList()){
-            
-            /*
-            Funcionario funcionario = funcionarios.get(chave);
-            FuncionarioVO funcionarioVO = new FuncionarioVO();
-            funcionarioVO.matricula = funcionario.getMatricula();
-            funcionarioVO.nome = funcionario.getNome();
-            funcionarioVO.dataNascimento = funcionario.getDataNascimento();
-            funcionarioVO.telefone = funcionario.getTelefone();
-            funcionarioVO.cargo = funcionario.getCargo();
-            funcionarioVO.bloqueado = funcionario.isBloqueado();
-            funcionarioVO.veiculos = funcionario.getVeiculos();
-             */
             funcionariosVO.put(funcionario.getMatricula(), getFuncionario(funcionario.getMatricula()));
         }
         return funcionariosVO;
     }
-    
 
-    //public Calendar pedirDataNascimento(){
-        //return telaFuncionarios.pedirDataNascimento();
-    //}
-    
     public static ControladorFuncionarios getInstance() {
         if(instance == null){
             instance = new ControladorFuncionarios();

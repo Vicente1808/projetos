@@ -18,7 +18,7 @@ public class Claviculario {
     //batata doce
     public static void main(String[] args) {
         
-        FuncionarioVO funcionario = new FuncionarioVO();
+        /*FuncionarioVO funcionario = new FuncionarioVO();
         funcionario.matricula =595;
         funcionario.nome ="Pablo";
         funcionario.dataNascimento = Calendar.getInstance();
@@ -26,21 +26,21 @@ public class Claviculario {
         funcionario.cargo="Diretor";   
         
         ControladorFuncionarios.getInstance().cadastrarFuncionario(funcionario);
-        
+        */
         Funcionario funcionario2 = new Funcionario(596,"Pedro", Calendar.getInstance(), "48998288680","assistente");   
         //ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario2);
         Funcionario funcionario3 = new Funcionario(597,"Vinicius", Calendar.getInstance(), "48998288680","diretor");   
         //ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario3);        
          
-        Veiculo veiculo = new Veiculo("aaa-1234", "GTO", "Pontiac", 1969, 100000);
-        Veiculo veiculo2 = new Veiculo("bbb-1234", "RAM", "DODGE", 2016, 1000);
-        Veiculo veiculo3 = new Veiculo("ccc-1234", "Gallardo", "Lamborguini", 2017, 0);
-        Veiculo veiculo4 = new Veiculo("ddd-1234", "MAVERICK", "FORD", 1969, 50000);
+        //Veiculo veiculo = new Veiculo("aaa-1234", "GTO", "Pontiac", 1969, 100000);
+        //Veiculo veiculo2 = new Veiculo("bbb-1234", "RAM", "DODGE", 2016, 1000);
+        //Veiculo veiculo3 = new Veiculo("ccc-1234", "Gallardo", "Lamborguini", 2017, 0);
+        //Veiculo veiculo4 = new Veiculo("ddd-1234", "MAVERICK", "FORD", 1969, 50000);
         
-        ControladorVeiculos.getInstance().getVeiculos().add(veiculo);
-        ControladorVeiculos.getInstance().getVeiculos().add(veiculo2);
-        ControladorVeiculos.getInstance().getVeiculos().add(veiculo3);
-        ControladorVeiculos.getInstance().getVeiculos().add(veiculo4);
+        //ControladorVeiculos.getInstance().getVeiculos().add(veiculo);
+        //ControladorVeiculos.getInstance().getVeiculos().add(veiculo2);
+        //ControladorVeiculos.getInstance().getVeiculos().add(veiculo3);
+        //ControladorVeiculos.getInstance().getVeiculos().add(veiculo4);
         
         /*Calendar c = Calendar.getInstance();
         Date data = c.getTime();

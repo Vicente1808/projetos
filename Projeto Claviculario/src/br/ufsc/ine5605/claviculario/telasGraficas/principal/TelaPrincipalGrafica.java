@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufsc.ine5605.claviculario.telasGraficas;
+package br.ufsc.ine5605.claviculario.telasGraficas.principal;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import java.awt.Container;

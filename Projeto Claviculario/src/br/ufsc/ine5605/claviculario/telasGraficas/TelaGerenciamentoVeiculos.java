@@ -6,6 +6,7 @@
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
+import br.ufsc.ine5605.claviculario.controladores.ControladorVeiculos;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -107,8 +108,8 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
-        
-    }
+            ControladorVeiculos.getInstance().carregarTelaNovoVeiculo();
+        }
     }
     
 }
