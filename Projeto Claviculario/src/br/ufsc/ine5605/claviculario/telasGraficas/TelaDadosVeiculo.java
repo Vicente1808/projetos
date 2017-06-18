@@ -283,7 +283,6 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener {
              pesquisar();
    
         }else if(ae.getSource()==btAtualizar) {
-            pesquisar();
             
             VeiculoVO veiculoVO = new VeiculoVO();
             veiculoVO.placa = tfPlaca.getText();

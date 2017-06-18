@@ -37,7 +37,7 @@ public class MapeadorVeiculo {
         persist();
     }
     
-    public void load(){
+    private void load(){
         try{
             FileInputStream entrada = new FileInputStream(filename);
             ObjectInputStream objetoEntrada = new ObjectInputStream(entrada);
@@ -48,13 +48,13 @@ public class MapeadorVeiculo {
             entrada.close();
 
             objetoEntrada = null;
-            entrada=null;
+            entrada = null;
         
+        }catch(ClassNotFoundException ae){
+            System.out.println(ae);
         }catch(FileNotFoundException ae){
             System.out.println(ae);
         }catch(IOException ae){
-            System.out.println(ae);
-        }catch(ClassNotFoundException ae){
             System.out.println(ae);
         }
     }
@@ -63,22 +63,25 @@ public class MapeadorVeiculo {
         try{
             FileOutputStream saida = new FileOutputStream(filename);
             ObjectOutputStream objetoSaida = new ObjectOutputStream(saida);
-
+            objetoSaida.writeObject(listaVeiculos);
+            
             objetoSaida.flush();
             saida.flush();
-
+            
             objetoSaida=null;
             saida=null;
-        }catch(FileNotFoundException ae){
-            System.out.println(ae);
-        }catch(IOException ae){
-            System.out.println(ae);
+            
+        }catch(FileNotFoundException ex){
+            System.out.println(ex);
+        }catch(IOException ex){
+            System.out.println(ex);
         }
         
     }
     
     public void remove(String placa){
         listaVeiculos.remove(placa);
+        persist();
     }
         
     public Collection<Veiculo> getList(){

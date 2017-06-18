@@ -79,6 +79,7 @@ public class MapeadorFuncionario {
 
     public void remove(Integer matricula) {
         listaFuncionarios.remove(matricula);
+        persist();
     }
 
     public HashMap<Integer, Funcionario> getList() {
