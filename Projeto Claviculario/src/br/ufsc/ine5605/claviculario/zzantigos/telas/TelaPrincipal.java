@@ -84,9 +84,9 @@ public class TelaPrincipal {
         System.out.println("---------------------------------------------------------------------------");
         
         int matricula = pedeMatricula();
-        String placa = ControladorPrincipal.getInstance().pedirPlacaVeiculo();
+        //String placa = ControladorPrincipal.getInstance().pedirPlacaVeiculo();
         int kmAtual = pedeKMatualVeiculo();
-        System.out.println(ControladorPrincipal.getInstance().devolverVeiculo(matricula, placa, kmAtual).getMensagem());
+        //System.out.println(ControladorPrincipal.getInstance().devolverVeiculo(matricula, placa, kmAtual).getMensagem());
         
         this.exibirMenu();
     }
