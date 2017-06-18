@@ -18,7 +18,7 @@ public class Claviculario {
     //batata doce
     public static void main(String[] args) {
         
-        /*FuncionarioVO funcionario = new FuncionarioVO();
+        FuncionarioVO funcionario = new FuncionarioVO();
         funcionario.matricula =595;
         funcionario.nome ="Pablo";
         funcionario.dataNascimento = Calendar.getInstance();
@@ -26,11 +26,9 @@ public class Claviculario {
         funcionario.cargo="Diretor";   
         
         ControladorFuncionarios.getInstance().cadastrarFuncionario(funcionario);
-        */
+        
         Funcionario funcionario2 = new Funcionario(596,"Pedro", Calendar.getInstance(), "48998288680","assistente");   
-        //ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario2);
         Funcionario funcionario3 = new Funcionario(597,"Vinicius", Calendar.getInstance(), "48998288680","diretor");   
-        //ControladorFuncionarios.getInstance().getFuncionarios().add(funcionario3);        
          
         //Veiculo veiculo = new Veiculo("aaa-1234", "GTO", "Pontiac", 1969, 100000);
         //Veiculo veiculo2 = new Veiculo("bbb-1234", "RAM", "DODGE", 2016, 1000);

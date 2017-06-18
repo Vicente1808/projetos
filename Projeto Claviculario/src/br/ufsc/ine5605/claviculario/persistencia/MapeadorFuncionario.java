@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -69,9 +68,6 @@ public class MapeadorFuncionario {
         objetoSaida.flush();
         saida.flush();
         
-        objetoSaida=null;
-        saida=null;
-        
         }catch(FileNotFoundException ex){
             System.out.println(ex);
             //ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.ARQUIVONAOENCONTRADO.getMensagem());
@@ -85,8 +81,8 @@ public class MapeadorFuncionario {
         listaFuncionarios.remove(matricula);
     }
 
-    public Collection<Funcionario> getList() {
-        return listaFuncionarios.values();
+    public HashMap<Integer, Funcionario> getList() {
+        return listaFuncionarios;
     }
 
 }

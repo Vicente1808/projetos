@@ -8,19 +8,17 @@ package br.ufsc.ine5605.claviculario.telasGraficas;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.util.HashMap;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 
 /**
  *
  * @author 05169430906
  */
-public class TableModelPessoal implements TableModel {
+public class TableModelPessoal extends AbstractTableModel{
     
     private final String[] nomeColunas = {"Matricula", "Nome", "Nascimento", "Telefone", "Cargo", "Bloqueado"};
     private final Object[][] data;
-    
-    
     
     TableModelPessoal(HashMap<Integer, FuncionarioVO> lista) {
         data = new Object[lista.keySet().size()][6];
@@ -48,39 +46,13 @@ public class TableModelPessoal implements TableModel {
     }
 
     @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        return data[rowIndex][columnIndex];
+    }
+    
+    @Override
     public String getColumnName(int col) {
         return nomeColunas[col];
     }
 
-    @Override
-    public Class<?> getColumnClass(int col) {
-        return getValueAt(0, col).getClass();
-    }
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
-
-    @Override
-    public Object getValueAt(int row, int col) {
-        return data[row][col];
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int row, int col) {
-        data[row][col] = aValue;
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-        //this.addTableModelListener(l);
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
-        //this.removeTableModelListener(l);
-    }
-
-    
 }

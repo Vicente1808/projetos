@@ -167,9 +167,9 @@ public class ControladorFuncionarios{
     //}
     
     public void excluirVeiculoTodosFuncionarios(String placa){
-        for(Funcionario funcionario : mapeadorFuncionario.getList()){
-            if(funcionario.getVeiculos().contains(placa)){
-                funcionario.getVeiculos().remove(placa);
+        for(Integer matricula : mapeadorFuncionario.getList().keySet()){
+            if(mapeadorFuncionario.get(matricula).getVeiculos().contains(placa)){
+                mapeadorFuncionario.get(matricula).getVeiculos().remove(placa);
             }
         }
     }
@@ -200,8 +200,8 @@ public class ControladorFuncionarios{
     public HashMap getFuncionarios() {
         HashMap<Integer, FuncionarioVO> funcionariosVO = new HashMap<>();
         
-        for(Funcionario funcionario : mapeadorFuncionario.getList()){
-            funcionariosVO.put(funcionario.getMatricula(), getFuncionario(funcionario.getMatricula()));
+        for(Integer matricula : mapeadorFuncionario.getList().keySet()){
+            funcionariosVO.put(matricula, getFuncionario(matricula));
         }
         return funcionariosVO;
     }
