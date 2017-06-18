@@ -27,7 +27,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     private ControladorPrincipal controladorPrincipal;
     private JLabel lbTitulo;
     private JButton btNovo;
-    private JButton btExluir;
+    private JButton btExcluir;
     private JButton btAtualizar;
     private JButton btLiberarFuncionario;
     private JTable  tabelaVeiculos;
@@ -42,7 +42,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     public void inicia(){
         lbTitulo = new JLabel();
         btNovo = new JButton();
-        btExluir = new JButton();
+        btExcluir = new JButton();
         btAtualizar = new JButton();
         btLiberarFuncionario = new JButton();
         tabelaVeiculos = new JTable(7,8);
@@ -56,9 +56,9 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
         btNovo.setBounds(50, 503, 130, 50);
         btNovo.addActionListener(this);
         
-        btExluir.setText("Excluir");
-        btExluir.setBounds(200, 503, 130, 50);
-        btExluir.addActionListener(this);        
+        btExcluir.setText("Excluir");
+        btExcluir.setBounds(200, 503, 130, 50);
+        btExcluir.addActionListener(this);        
         
         btAtualizar.setText("Atualizar");
         btAtualizar.setBounds(350, 503, 130, 50);
@@ -78,7 +78,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
         
         container.add(lbTitulo);
         container.add(btNovo);
-        container.add(btExluir);
+        container.add(btExcluir);
         container.add(btAtualizar);
         container.add(btLiberarFuncionario);
         container.add(scroll);
@@ -108,7 +108,9 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
-            ControladorVeiculos.getInstance().carregarTelaDadosVeiculo("Novo Veiculo");
+            ControladorVeiculos.getInstance().carregarTelaCadastroVeiculo();
+        }else if(ae.getSource()==btExcluir){
+            ControladorVeiculos.getInstance().carregarTelaExclusãoVeiculo();
         }
     }
     
