@@ -3,7 +3,7 @@ package br.ufsc.ine5605.claviculario.controladores;
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorFuncionario;
-import br.ufsc.ine5605.claviculario.telasGraficas.TelaGraficaDadosFuncionario;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosFuncionario;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -16,13 +16,13 @@ import java.util.HashMap;
 public class ControladorFuncionarios{
     //Atributos
     private static ControladorFuncionarios instance;
-    private final TelaGraficaDadosFuncionario telaGraficaDadosFuncionario;
+    private final TelaDadosFuncionario telaGraficaDadosFuncionario;
     private final MapeadorFuncionario mapeadorFuncionario;
     //private final TelaGerenciamentoFuncionario telaGraficaGerenciamentoFuncionario;
         
     //Contrutor
     private ControladorFuncionarios(){
-        this.telaGraficaDadosFuncionario = new TelaGraficaDadosFuncionario(this);
+        this.telaGraficaDadosFuncionario = new TelaDadosFuncionario(this);
         this.mapeadorFuncionario = new MapeadorFuncionario();
         //this.telaGraficaGerenciamentoFuncionario = new TelaGerenciamentoFuncionario(this);
     }

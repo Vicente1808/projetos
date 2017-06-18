@@ -6,6 +6,7 @@ import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
 import java.util.HashMap;
+import javax.swing.JButton;
 
 public class ControladorVeiculos{
     //Atributos
@@ -19,12 +20,21 @@ public class ControladorVeiculos{
         this.telaDadosVeiculo = new TelaDadosVeiculo();
     }
     
-    public void carregarTelaDadosVeiculo(String titulo){
-        telaDadosVeiculo.setTitle(titulo);
+    public void carregarTelaCadastroVeiculo(){
+        telaDadosVeiculo.setTitle("Novo Veiculo");
+        telaDadosVeiculo.trocarBotao("btCadastrar");
+        telaDadosVeiculo.alterarEdicao(true);
         telaDadosVeiculo.setVisible(true);
 
     }
    
+    public void carregarTelaExclusãoVeiculo(){
+        telaDadosVeiculo.setTitle("Exclusão De Veiculo");
+        telaDadosVeiculo.trocarBotao("btExcluir");
+        telaDadosVeiculo.alterarEdicao(false);
+        telaDadosVeiculo.setVisible(true);
+    }
+    
     public boolean validarPlaca(String placa){
         return (mapeadorVeiculo.get(placa)!=null);
     }
