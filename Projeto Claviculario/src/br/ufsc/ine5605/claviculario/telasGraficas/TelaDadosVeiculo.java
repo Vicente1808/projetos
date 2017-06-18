@@ -36,8 +36,7 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener {
     private JFormattedTextField tfKmAtual;
     private JCheckBox cjDisponivel;
     
-    public TelaDadosVeiculo(String tiulo){
-        super(tiulo);
+    public TelaDadosVeiculo(){
         this.controladorVeiculos = controladorVeiculos;
         inicia();
     }
