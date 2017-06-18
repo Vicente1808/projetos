@@ -5,6 +5,7 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorVeiculos{
@@ -137,7 +138,21 @@ public class ControladorVeiculos{
     public void carregarMenuPrincipal(){
         ControladorPrincipal.getInstance().carregarTelaPrincipal();
     }    
-
+    
+    public String[][] getVeiculosSimples(){
+        int tamanho = mapeadorVeiculo.getList().size();
+        String[][] placas = new String[tamanho][2];
+            for(int i = 0; i<tamanho;i++){
+                for(Veiculo veiculo: mapeadorVeiculo.getList()){
+                String placa = veiculo.getPlaca();
+                String modelo = veiculo.getModelo();
+                placas[i][0]= placa;
+                placas[i][1]=modelo;
+            }
+        }
+        return placas;
+    }
+    
     public HashMap getVeiculos() {
         HashMap<String, VeiculoVO> veiculosVO = new HashMap<>();
         
