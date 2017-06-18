@@ -1,91 +1,99 @@
 package br.ufsc.ine5605.claviculario.controladores;
 
+import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.entidades.Veiculo;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
-import br.ufsc.ine5605.claviculario.zzantigos.telas.TelaVeiculos;
-import java.util.ArrayList;
+import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
+import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
+import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
+import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
+import java.util.HashMap;
 
 public class ControladorVeiculos{
     //Atributos
     private static ControladorVeiculos instance;
-    private final ArrayList<Veiculo> veiculos;
-    private final TelaVeiculos telaVeiculos;
+    private TelaDadosVeiculo telaDadosVeiculo;
+    private final MapeadorVeiculo mapeadorVeiculo;
+    
     
     private ControladorVeiculos(){
-        veiculos = new ArrayList<>();
-        telaVeiculos = new TelaVeiculos(this);
+        this.mapeadorVeiculo = new MapeadorVeiculo();
     }
     
-    public String cadastrarVeiculo(){//String placa, String modelo, String marca, int ano, int kmAtual){
-        
-        String placa = pedirPlacaVeiculo();
+    public void carregarTelaNovoVeiculo(){
+        telaDadosVeiculo.setTitle("Novo Veiculo");
+        telaDadosVeiculo.setVisible(true);
+    }
+   
+    public boolean validarPlaca(String placa){
+        return (mapeadorVeiculo.get(placa)!=null);
+    }
+    
+    public String cadastrarVeiculo(VeiculoVO veiculoVO){
         String retornoCadastro =EntradaSaida.PLACADUPLICADA.getMensagem();
-        if(!validarPlaca(placa)){
-            String modelo = telaVeiculos.pedeModeloVeiculo();
-            String marca = telaVeiculos.pedeMarcaVeiculo();
-            int ano = telaVeiculos.pedeAnoVeiculo();
-            int kmAtual = telaVeiculos.pedeKMAtualVeiculo();
-            Veiculo veiculo = new Veiculo(placa, modelo, marca, ano, kmAtual);
-            veiculos.add(veiculo);
+        
+        if(!validarPlaca(veiculoVO.placa)){
+            Veiculo veiculo = new Veiculo(veiculoVO.placa, veiculoVO.modelo, veiculoVO.marca, veiculoVO.ano, veiculoVO.kmAtual);
+            mapeadorVeiculo.put(veiculo);
             retornoCadastro = EntradaSaida.VEICULOCADASTRADO.getMensagem();
-            
         }
         return retornoCadastro;
     }
 
-    public String excluirVeiculo(){//String placa){
+    public String excluirVeiculo(String placa){
         String retornoVeiculoExcluido = EntradaSaida.PLACAINEXISTENTE.getMensagem();
-        String placa = pedirPlacaVeiculo();
+        
         if(validarPlaca(placa)){
-            if(!getVeiculo(placa).isChaveClaviculario()){
+            
+            if(!mapeadorVeiculo.get(placa).isChaveClaviculario()){
                 retornoVeiculoExcluido = EntradaSaida.VEICULOPENDENTE.getMensagem();
             }else{
-                veiculos.remove(getVeiculo(placa));
+                mapeadorVeiculo.remove(placa);
                 ControladorPrincipal.getInstance().excluirVeiculoTodosFuncionarios(placa);
                 retornoVeiculoExcluido = EntradaSaida.VEICULOEXCLUIDO.getMensagem();
             }
         }    
         return retornoVeiculoExcluido;
     }
-    
-    public String atualizarCadastroVeiculo(){
+   
+    public String atualizarCadastroVeiculo(VeiculoVO veiculoVO){
         String retornoAtualizacao = EntradaSaida.PLACAINEXISTENTE.getMensagem();
-        String placa = pedirPlacaVeiculo();
-        if(validarPlaca(placa)){
-            String modelo = telaVeiculos.pedeModeloVeiculo();
-            String marca = telaVeiculos.pedeMarcaVeiculo();
-            int ano = telaVeiculos.pedeAnoVeiculo();
-            int kmAtual = telaVeiculos.pedeKMAtualVeiculo();
-            
-            Veiculo veiculo = getVeiculo(placa);
-            veiculo.setMarca(marca);
-            veiculo.setModelo(modelo);
-            veiculo.setAno(ano);
-            veiculo.setKmAtual(kmAtual);
+        
+        if(validarPlaca(veiculoVO.placa)){
+            Veiculo veiculo =mapeadorVeiculo.get(veiculoVO.placa);
+            veiculo.setPlaca(veiculoVO.placa);
+            veiculo.setMarca(veiculoVO.marca);
+            veiculo.setModelo(veiculoVO.modelo);
+            veiculo.setAno(veiculoVO.ano);
+            veiculo.setKmAtual(veiculoVO.kmAtual);
             retornoAtualizacao = EntradaSaida.VEICULOATUALIZADO.getMensagem();
         }
         return retornoAtualizacao;
     }
     
-    public String pesquisarVeiculo(String placa){
+    public VeiculoVO getVeiculo(String placa){
         String retornoPesquisa = EntradaSaida.PLACAINEXISTENTE.getMensagem();
-        //String placa = telaVeiculos.pedePlacaVeiculo();
+        VeiculoVO veiculoVO = new VeiculoVO();
         if(validarPlaca(placa)){
-            Veiculo veiculo = getVeiculo(placa);
-            String marca = veiculo.getMarca();
-            String modelo = veiculo.getModelo();
-            int ano = veiculo.getAno();
-            int kmAtual = veiculo.getKmAtual();
-            boolean chave = veiculo.isChaveClaviculario();
-            retornoPesquisa = placa+","+marca+","+modelo+","+ano+","+kmAtual+","+chave;
+            Veiculo veiculo = mapeadorVeiculo.get(placa);
+            
+            
+            veiculoVO.placa = veiculo.getPlaca();
+            veiculoVO.marca = veiculo.getMarca();
+            veiculoVO.modelo = veiculo.getModelo();
+            veiculoVO.ano = veiculo.getAno();
+            veiculoVO.kmAtual = veiculo.getKmAtual();
+            veiculoVO.chaveClaviculario = veiculo.isChaveClaviculario();
+            
         }
-        return retornoPesquisa;
+        return veiculoVO;
     }
-    
+
+/*    
     public boolean exibirDadosVeiculo(String placa){
         boolean retorno = false;
         if(validarPlaca(placa)){
-            telaVeiculos.exibirDadosDeVeiculos(pesquisarVeiculo(placa));
+            telaVeiculos.exibirDadosDeVeiculos(getVeiculo(placa));
         }
         return retorno;
     }
@@ -99,37 +107,26 @@ public class ControladorVeiculos{
     
     public void exbirListaVeiculosFuncionario(ArrayList<String> veiculosFuncionario){
         for(String placa : veiculosFuncionario){
-            telaVeiculos.exibirDadosDeVeiculos(pesquisarVeiculo(placa));
+            telaVeiculos.exibirDadosDeVeiculos(getVeiculo(placa));
         }
     }
     
-    public boolean validarPlaca(String placa){
-        return (getVeiculo(placa)!=null);
-    }
-        
-    public Veiculo getVeiculo(String placa){
-        Veiculo veiculoPlaca = null;
-        for(Veiculo veiculo : veiculos){
-            if(veiculo.getPlaca().equals(placa)){
-                veiculoPlaca = veiculo;
-                break;
-            }
-        }
-        return veiculoPlaca;
-    }
-    public String pedirPlacaVeiculo(){
-        return telaVeiculos.pedePlacaVeiculo();
-    }
-    
-    public  void carregarMenuVeiculos(){
-        telaVeiculos.exibeMenu();
-    }
+
+      
+*/
+
     public void carregarMenuPrincipal(){
         ControladorPrincipal.getInstance().carregarTelaPrincipal();
     }    
 
-    public ArrayList<Veiculo> getVeiculos() {
-        return veiculos;
+    public HashMap getVeiculos() {
+        HashMap<String, VeiculoVO> veiculosVO = new HashMap<>();
+        
+        for(Veiculo veiculo: Collection mapeadorVeiculo.ge;
+            veiculosVO.put(veiculo.getPlaca(), getVeiculo(veiculo.getPlaca()));
+        }
+        return veiculosVO;
+    }
     }
     
 
