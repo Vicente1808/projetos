@@ -64,7 +64,8 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
         btAtualizar.setBounds(350, 503, 130, 50);
         btAtualizar.addActionListener(this);   
 
-        btLiberarFuncionario.setText("Liberar Funcionario");
+        //btLiberarFuncionario.setText("Liberar Funcionario");
+        btLiberarFuncionario.setText("Não aperte aqui!!!");
         btLiberarFuncionario.setBounds(500, 503, 135, 50);
         btLiberarFuncionario.addActionListener(this); 
         
@@ -111,6 +112,8 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
             ControladorVeiculos.getInstance().carregarTelaCadastroVeiculo();
         }else if(ae.getSource()==btExcluir){
             ControladorVeiculos.getInstance().carregarTelaExclusãoVeiculo();
+        }else if(ae.getSource()==btAtualizar){
+            ControladorVeiculos.getInstance().carregarTelaAtualizacaoVeiculo();
         }
     }
     
