@@ -6,7 +6,6 @@ import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
 import java.util.HashMap;
-import javax.swing.JButton;
 
 public class ControladorVeiculos{
     //Atributos
@@ -23,6 +22,7 @@ public class ControladorVeiculos{
     public void carregarTelaCadastroVeiculo(){
         telaDadosVeiculo.setTitle("Novo Veiculo");
         telaDadosVeiculo.trocarBotao("btCadastrar");
+        telaDadosVeiculo.limparTela();
         telaDadosVeiculo.alterarEdicao(true);
         telaDadosVeiculo.setVisible(true);
 
@@ -31,6 +31,15 @@ public class ControladorVeiculos{
     public void carregarTelaExclusãoVeiculo(){
         telaDadosVeiculo.setTitle("Exclusão De Veiculo");
         telaDadosVeiculo.trocarBotao("btExcluir");
+        telaDadosVeiculo.limparTela();
+        telaDadosVeiculo.alterarEdicao(false);
+        telaDadosVeiculo.setVisible(true);
+    }
+    
+    public void carregarTelaAtualizacaoVeiculo(){
+        telaDadosVeiculo.setTitle("Atualização Cadastro De Veiculo");
+        telaDadosVeiculo.trocarBotao("Atualizar");
+        telaDadosVeiculo.limparTela();
         telaDadosVeiculo.alterarEdicao(false);
         telaDadosVeiculo.setVisible(true);
     }
@@ -86,11 +95,9 @@ public class ControladorVeiculos{
     }
     
     public VeiculoVO getVeiculo(String placa){
-        String retornoPesquisa = EntradaSaida.PLACAINEXISTENTE.getMensagem();
         VeiculoVO veiculoVO = new VeiculoVO();
         if(validarPlaca(placa)){
             Veiculo veiculo = mapeadorVeiculo.get(placa);
-            
             
             veiculoVO.placa = veiculo.getPlaca();
             veiculoVO.marca = veiculo.getMarca();
