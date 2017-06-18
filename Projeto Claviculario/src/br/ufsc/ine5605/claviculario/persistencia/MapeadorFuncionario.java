@@ -6,7 +6,6 @@
 package br.ufsc.ine5605.claviculario.persistencia;
 
 import br.ufsc.ine5605.claviculario.entidades.Funcionario;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,7 +21,7 @@ import java.util.HashMap;
  */
 public class MapeadorFuncionario {
     private HashMap<Integer, Funcionario> listaFuncionarios;
-    private final String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files";
+    private String filename = "src/br/ufsc/ine5605/claviculario/persistencia/files/funcionarios.rtm";
     
     public MapeadorFuncionario(){
         listaFuncionarios = new HashMap<>();
