@@ -131,12 +131,8 @@ public class ControladorVeiculos{
             telaVeiculos.exibirDadosDeVeiculos(getVeiculo(placa));
         }
     }
-    
-
       
 */
-
-
     
     public void carregarMenuPrincipal(){
         ControladorPrincipal.getInstance().carregarTelaPrincipal();
