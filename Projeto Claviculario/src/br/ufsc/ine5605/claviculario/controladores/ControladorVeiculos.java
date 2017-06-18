@@ -1,11 +1,9 @@
 package br.ufsc.ine5605.claviculario.controladores;
 
-import br.ufsc.ine5605.claviculario.entidades.Funcionario;
 import br.ufsc.ine5605.claviculario.entidades.Veiculo;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
-import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
 import java.util.HashMap;
 
@@ -18,11 +16,13 @@ public class ControladorVeiculos{
     
     private ControladorVeiculos(){
         this.mapeadorVeiculo = new MapeadorVeiculo();
+        this.telaDadosVeiculo = new TelaDadosVeiculo();
     }
     
-    public void carregarTelaNovoVeiculo(){
-        telaDadosVeiculo.setTitle("Novo Veiculo");
+    public void carregarTelaDadosVeiculo(String titulo){
+        telaDadosVeiculo.setTitle(titulo);
         telaDadosVeiculo.setVisible(true);
+
     }
    
     public boolean validarPlaca(String placa){
@@ -71,6 +71,10 @@ public class ControladorVeiculos{
         return retornoAtualizacao;
     }
     
+    public void alterarChaveClaviculario(String placa, boolean chave){
+        mapeadorVeiculo.get(placa).setChaveClaviculario(chave);
+    }
+    
     public VeiculoVO getVeiculo(String placa){
         String retornoPesquisa = EntradaSaida.PLACAINEXISTENTE.getMensagem();
         VeiculoVO veiculoVO = new VeiculoVO();
@@ -115,6 +119,8 @@ public class ControladorVeiculos{
       
 */
 
+
+    
     public void carregarMenuPrincipal(){
         ControladorPrincipal.getInstance().carregarTelaPrincipal();
     }    
@@ -122,12 +128,15 @@ public class ControladorVeiculos{
     public HashMap getVeiculos() {
         HashMap<String, VeiculoVO> veiculosVO = new HashMap<>();
         
-        for(Veiculo veiculo: Collection mapeadorVeiculo.ge;
-            veiculosVO.put(veiculo.getPlaca(), getVeiculo(veiculo.getPlaca()));
+        for(Veiculo veiculo: mapeadorVeiculo.getList()){
+            
+            veiculosVO.put(veiculo.getPlaca(), getVeiculo(veiculo.getPlaca()));            
         }
+        
+
         return veiculosVO;
     }
-    }
+  
     
 
     public static ControladorVeiculos getInstance() {
