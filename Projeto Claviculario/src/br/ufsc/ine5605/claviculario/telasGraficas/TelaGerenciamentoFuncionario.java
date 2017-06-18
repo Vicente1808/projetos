@@ -106,19 +106,20 @@ public class TelaGerenciamentoFuncionario extends JFrame implements ActionListen
         //ctrl.carregarMenuPrincipal();
     }
     
-    //public void updateTable(){
-        //tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
-        //this.repaint();
-    //}
+    public void updateTable(){
+        
+    }
+    
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
             ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Novo Funcionario");
-         
+            updateTable();
         }else{
             
         }
+        
     }
 
 
