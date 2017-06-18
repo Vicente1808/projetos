@@ -66,10 +66,10 @@ public class ControladorPrincipal {
                 
         }else if(ControladorFuncionarios.getInstance().quantidadeVeiculosFuncionarios(matricula)==1){
                 placa = ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos.get(0);
-                if(ControladorVeiculos.getInstance().getVeiculo(placa).isChaveClaviculario()){
+                if(ControladorVeiculos.getInstance().getVeiculo(placa).chaveClaviculario){
                     ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSOPERMITIDO);
-                    ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(false);
-                    ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
+                    ControladorVeiculos.getInstance().alterarChaveClaviculario(placa,true);
+                    ControladorFuncionarios.getInstance().alterarVeiculoPendente(matricula, placa);
                                     
                 }else{
                     retornoRetirada = RetiradaEDevolucao.VEICULOINDISPONIVEL;
@@ -89,10 +89,10 @@ public class ControladorPrincipal {
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.FUNCIONARIOBLOQUEADO);
                 retornoRetirada = RetiradaEDevolucao.USUARIOBLOQUEADO;
             }
-            if(ControladorVeiculos.getInstance().getVeiculo(placa).isChaveClaviculario()){
+            if(ControladorVeiculos.getInstance().getVeiculo(placa).chaveClaviculario){
                 ControladorRegistros.getInstance().registrarRetirada(matricula, placa, data, true, MensagemAcessoNegacao.ACESSOPERMITIDO);
-                ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(false);
-                ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
+                ControladorVeiculos.getInstance().alterarChaveClaviculario(placa,false);
+                ControladorFuncionarios.getInstance().alterarVeiculoPendente(matricula, placa);
                 retornoRetirada = RetiradaEDevolucao.VEICULORETIRADO;
             }else{
                 retornoRetirada = RetiradaEDevolucao.VEICULOINDISPONIVEL;
@@ -108,10 +108,9 @@ public class ControladorPrincipal {
         RetiradaEDevolucao retorno = RetiradaEDevolucao.VEICULODEVOLVIDO;
         
         if(ControladorFuncionarios.getInstance().validarMatricula(matricula) && ControladorVeiculos.getInstance().validarPlaca(placa)) {
-            if(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculoPendente.equals(placa)) {
-                ControladorVeiculos.getInstance().getVeiculo(placa).setKmAtual(kmAtual);
-                ControladorVeiculos.getInstance().getVeiculo(placa).setChaveClaviculario(true);
-                ControladorFuncionarios.getInstance().atribuirVeiculoPendente(matricula, placa);
+            if(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculoPendente.equals(placa)){
+                ControladorVeiculos.getInstance().alterarChaveClaviculario(placa, true);
+                ControladorFuncionarios.getInstance().alterarVeiculoPendente(matricula,null);
                 ControladorRegistros.getInstance().registrarDevolucao(matricula, placa, Calendar.getInstance().getTime());
             } else {
                 retorno = RetiradaEDevolucao.VEICULONAOASSOCIADO;
@@ -173,9 +172,9 @@ public class ControladorPrincipal {
       //  ControladorVeiculos.getInstance().exibirDadosVeiculo(placa);
    // }
     
-    public void getVeiculosAutorizados(int matricula){
-        ControladorVeiculos.getInstance().exbirListaVeiculosFuncionario(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos);
-   }
+    //public void getVeiculosAutorizados(int matricula){
+        //ControladorVeiculos.getInstance().exbirListaVeiculosFuncionario(ControladorFuncionarios.getInstance().getFuncionario(matricula).veiculos);
+   //}
     
     public boolean validarPlaca(String placa){
         return ControladorVeiculos.getInstance().validarPlaca(placa);
@@ -185,9 +184,9 @@ public class ControladorPrincipal {
         ControladorFuncionarios.getInstance().excluirVeiculoTodosFuncionarios(placa);
     }
     
-    public String pedirPlacaVeiculo(){
-        return ControladorVeiculos.getInstance().pedirPlacaVeiculo();
-    }
+    //public String pedirPlacaVeiculo(){
+        // ControladorVeiculos.getInstance().pedirPlacaVeiculo();
+    //}//
     
     public boolean perguntarAoUsuario(String mensagem){
         return false;
