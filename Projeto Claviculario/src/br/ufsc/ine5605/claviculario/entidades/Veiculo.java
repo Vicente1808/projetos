@@ -1,8 +1,10 @@
 package br.ufsc.ine5605.claviculario.entidades;
 
+import java.io.Serializable;
 
 
-public class Veiculo{
+
+public class Veiculo implements Serializable{
     private String placa;
     private String modelo;
     private String marca;
