@@ -12,6 +12,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,7 +27,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -73,11 +76,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         String[] cargos = {"Diretor","Outro"};
         
         
-        try {
-            btMatricula = new JFormattedTextField(new MaskFormatter("######"));
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-       }
+        btMatricula = new JFormattedTextField(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getIntegerInstance())));
         btMatricula.setText("");
         nome = new JTextField();
         
@@ -142,12 +141,12 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         
         veiculoPendente.setText("Veiculo Pendente:         AAA-1234");
         veiculoPendente.setBounds(50, 340, 240, 25);
+        veiculoPendente.setEnabled(false);
         
         cadastrar.setText("Cadastrar");
         cadastrar.setBounds(50, 370, 120, 30);
         cadastrar.addActionListener(this);
         
-        //infoTela.setText("Matricula invalida");
         infoTela.setBounds(320, 370, 330, 25);
         infoTela.setForeground(Color.red);
         
