@@ -16,12 +16,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -61,10 +63,15 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
     private JButton btAtualizar;
     private JButton btPesquisar;
     private JTextField tfCargoOutro;
+    private ArrayList<String> cargos2;
     
     public TelaDadosFuncionario(ControladorFuncionarios controladorFuncionarios){
         this.controladorFuncionarios = controladorFuncionarios;
         inicia();
+    }
+    
+    public void setListaCargos(ArrayList<String> cargos) {
+        this.cargos2 = cargos;
     }
     
     private void inicia(){
@@ -78,10 +85,11 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
         lbVeiculoPendente = new JLabel();
         infoTela = new JLabel();
         
-        String[] cargos = {"Diretor","Outro"};
+        //String[] cargos3 = {"Diretor","Outro"};
+        //String[] cargos = ControladorFuncionarios.getInstance().adicionarCargos();
         String[] status = {"Liberado","Bloqueado"};
         
-        tfMatricula = new JFormattedTextField(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("######"))));
+        tfMatricula = new JFormattedTextField(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getIntegerInstance())));
         tfMatricula.setText("");
         tfNome = new JTextField();
         
@@ -96,7 +104,10 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
         } catch (ParseException ex) {
             Logger.getLogger(TelaDadosFuncionario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        tfCargo = new JComboBox(cargos);
+        
+        MyComboModel model = new MyComboModel(cargos2);
+        
+        tfCargo = new JComboBox(model);
         tfBloqueado = new JComboBox(status);
         btCadastrar = new JButton();
         btAtualizar = new JButton();
@@ -199,10 +210,18 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
         setSize(680,460);
         setLocationRelativeTo(null);
         
-        if(tfCargo.getSelectedItem().toString().equals("Outro")){
-                container.add(tfCargoOutro);
-            }
+        //if(tfCargo.getSelectedItem().toString().equals("Outro")){
+          //      container.add(tfCargoOutro);
+            //}
     }   
+    
+    public void limparTela(){
+        tfMatricula.setText("");
+        tfNome.setText("");
+        tfDataNascimento.setText("");        
+        tfTelefone.setText("");        
+        lbVeiculoPendente.setText("");        
+    }
     
     public void pesquisar() {
         infoTela.setText("");
@@ -245,14 +264,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
         }
     }
     
-    public void limparTela(){
-        tfMatricula.setText("");
-        tfNome.setText("");
-        tfDataNascimento.setText("");        
-        tfTelefone.setText("");        
-        tfBloqueado.validate();
-        lbVeiculoPendente.setText("");        
-    }
+
     
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -308,10 +320,10 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
                 
                 funcionarioVO.telefone = tfTelefone.getText();
                 
-                if(tfCargo.getSelectedItem().equals("Outro")){
-                    funcionarioVO.cargo = tfCargoOutro.getText();
-                }else{
+                if(tfCargo.getSelectedItem().equals(EntradaSaida.OUTRO.getMensagem())){
                     funcionarioVO.cargo = tfCargo.getSelectedItem().toString();
+                }else{
+                    funcionarioVO.cargo = tfCargoOutro.getText();
                 }
                 
                 if(tfBloqueado.getSelectedItem().equals("Disponível")){
@@ -332,6 +344,8 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
             
         } else if(ae.getSource() == btPesquisar) {
             pesquisar();
+        }else if(ae.getSource()==btAtualizar){
+            
         }
     }
 
@@ -351,5 +365,15 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
+    private class MyComboModel extends DefaultComboBoxModel {
+  
+        private ArrayList<String> names;  
+
+        public MyComboModel(ArrayList<String> names) {
+            this.names = names;  
+        }  
+    }
     
 }
+

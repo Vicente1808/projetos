@@ -13,9 +13,6 @@ import br.ufsc.ine5605.claviculario.telasGraficas.principal.TelaRetiradaVeiculo;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 /**
  *
  * @author Pablo Vicente
@@ -23,6 +20,8 @@ import java.util.HashMap;
 public class ControladorPrincipal {
     //Atributos
     private static ControladorPrincipal instance; 
+    private ControladorFuncionarios controladorFuncionarios;
+    private ControladorVeiculos controladorVeiculos;
     private final TelaPrincipalGrafica telaPrincipal;
     private final TelaGraficaDevolucao telaDevolucao;
     private final TelaRetiradaVeiculo telaRetirada;
@@ -32,6 +31,8 @@ public class ControladorPrincipal {
     
     //Construtor
     private ControladorPrincipal(){
+        this.controladorFuncionarios = ControladorFuncionarios.getInstance();
+        this.controladorVeiculos = ControladorVeiculos.getInstance();
         telaPrincipal = new TelaPrincipalGrafica(this);
         telaDevolucao = new TelaGraficaDevolucao(this);
         telaRetirada = new TelaRetiradaVeiculo(this);
@@ -200,13 +201,13 @@ public class ControladorPrincipal {
         // ControladorVeiculos.getInstance().pedirPlacaVeiculo();
     //}//
     
-    public boolean perguntarAoUsuario(String mensagem){
-        return false;
-    }
+    //public boolean perguntarAoUsuario(String mensagem){
+        //return false;
+    //}
     
-    public void encerrar() {
+    //public void encerrar() {
         
-    }
+    //}
     //Métodos Para Pegar instancia do controlador
     public static ControladorPrincipal getInstance() {
         if(instance == null){

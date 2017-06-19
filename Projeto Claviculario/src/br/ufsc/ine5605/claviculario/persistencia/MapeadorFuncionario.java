@@ -70,10 +70,8 @@ public class MapeadorFuncionario {
         
         }catch(FileNotFoundException ex){
             System.out.println(ex);
-            //ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.ARQUIVONAOENCONTRADO.getMensagem());
         }catch(IOException ex){
             System.out.println(ex);
-            //ControladorFuncionarios.getInstance().mensagemErro(EntradaSaida.OBJECTO.getMensagem());
         }
     }
 
