@@ -318,7 +318,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
                     funcionarioVO.bloqueado =false;
                 }else{
                         funcionarioVO.bloqueado =true;
-                        }            
+                }            
                 //funcionarioVO.bloqueado = tfBloqueado.isBorderPaintedFlat();
                 funcionarioVO.veiculoPendente = null;
                 
