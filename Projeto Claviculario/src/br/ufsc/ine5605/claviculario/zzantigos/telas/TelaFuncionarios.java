@@ -118,17 +118,17 @@ public class TelaFuncionarios {
     public void cadastrarVeiculoFuncionario(){
         exibirTelaCadastroVeiculosFuncionario();
         int matricula = pedirMatriculaFuncionario();
-        exibiInformacaoVeiculoCadastrado(matricula);
+        //exibiInformacaoVeiculoCadastrado(matricula);
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
     }
     
-    public void exibiInformacaoVeiculoCadastrado(int matricula){
-        exibirTelaCadastroVeiculosFuncionario();
-        do{
+    //public void exibiInformacaoVeiculoCadastrado(int matricula){
+       // exibirTelaCadastroVeiculosFuncionario();
+        //do{
             //System.out.println(ControladorFuncionarios.getInstance().cadastrarVeiculosNoFuncionario(matricula));
-        }while(ControladorPrincipal.getInstance().perguntarAoUsuario(EntradaSaida.PERGUNTA.getMensagem()));
+        //}while(ControladorPrincipal.getInstance().perguntarAoUsuario(EntradaSaida.PERGUNTA.getMensagem()));
         //ControladorFuncionarios.getInstance().carregarMenuFuncionario();
-    }
+    //}
  
     public void exibirDadosDoFuncionario(String infoFuncionario){
     
