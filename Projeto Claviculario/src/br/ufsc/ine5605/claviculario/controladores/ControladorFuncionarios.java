@@ -5,6 +5,7 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorFuncionario;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosFuncionario;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -16,24 +17,48 @@ import java.util.HashMap;
 public class ControladorFuncionarios{
     //Atributos
     private static ControladorFuncionarios instance;
-    private final TelaDadosFuncionario telaGraficaDadosFuncionario;
+    private final TelaDadosFuncionario telaDadosFuncionario;
     private final MapeadorFuncionario mapeadorFuncionario;
     //private final TelaGerenciamentoFuncionario telaGraficaGerenciamentoFuncionario;
         
     //Contrutor
     private ControladorFuncionarios(){
-        this.telaGraficaDadosFuncionario = new TelaDadosFuncionario(this);
         this.mapeadorFuncionario = new MapeadorFuncionario();
-        //this.telaGraficaGerenciamentoFuncionario = new TelaGerenciamentoFuncionario(this);
+        this.telaDadosFuncionario = new TelaDadosFuncionario(this);
+        adicionarCargos();
     }
     
+     //Metodos Operacionais
     public void carregarTelaGraficaDadosFuncionarios(String titulo, int tipo){
-        telaGraficaDadosFuncionario.setTitle(titulo);
-        telaGraficaDadosFuncionario.definirBotoes(tipo);
-        telaGraficaDadosFuncionario.limparTela();
-        telaGraficaDadosFuncionario.setVisible(true);
+        telaDadosFuncionario.setTitle(titulo);
+        telaDadosFuncionario.definirBotoes(tipo);
+        telaDadosFuncionario.limparTela();
+        telaDadosFuncionario.setVisible(true);
     }
-    //Metodos Operacionais
+   
+        public void adicionarCargos(){
+        ArrayList<String> cargos = new ArrayList<>();
+            for(Funcionario funcionario :mapeadorFuncionario.getList().values()){
+            String cargoList = funcionario.getCargo();
+            if(!(cargos.contains(cargoList))){
+                cargos.add(cargoList);
+            }
+        }
+        if(!(cargos.contains(EntradaSaida.DIRETOR.getMensagem()))){
+            cargos.add(EntradaSaida.DIRETOR.getMensagem());
+        }
+        if(!(cargos.contains(EntradaSaida.OUTRO.getMensagem()))){
+            cargos.add(EntradaSaida.OUTRO.getMensagem());
+        }    
+        
+        int t = cargos.size();
+        String[] listaCargos = new String[t];
+        
+        for(int i=0;i<t;i++){
+            listaCargos[i]=cargos.get(i);
+        }
+            telaDadosFuncionario.setListaCargos(cargos);
+    }
 
     public String[][] getVeiculosSimples(){
         return ControladorPrincipal.getInstance().getListaVeiculosSimples();
