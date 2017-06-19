@@ -35,7 +35,7 @@ public class ControladorFuncionarios{
         telaDadosFuncionario.limparTela();
         telaDadosFuncionario.setVisible(true);
     }
-   
+    
         public void adicionarCargos(){
         ArrayList<String> cargos = new ArrayList<>();
             for(Funcionario funcionario :mapeadorFuncionario.getList().values()){
