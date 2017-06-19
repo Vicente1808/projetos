@@ -210,9 +210,9 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
         setSize(680,460);
         setLocationRelativeTo(null);
         
-        if(tfCargo.getSelectedItem().toString().equals("Outro")){
-                container.add(tfCargoOutro);
-            }
+        //if(tfCargo.getSelectedItem().toString().equals("Outro")){
+          //      container.add(tfCargoOutro);
+            //}
     }   
     
     public void limparTela(){
