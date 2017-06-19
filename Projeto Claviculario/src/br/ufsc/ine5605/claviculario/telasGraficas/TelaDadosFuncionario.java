@@ -344,6 +344,8 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyL
             
         } else if(ae.getSource() == btPesquisar) {
             pesquisar();
+        }else if(ae.getSource()==btAtualizar){
+            
         }
     }
 
