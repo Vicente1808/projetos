@@ -60,7 +60,7 @@ public class TelaPrincipal {
                     ControladorPrincipal.getInstance().carregarMenuRegistros();
                     break;
                 case 0:
-                    ControladorPrincipal.getInstance().encerrar();
+                    //ControladorPrincipal.getInstance().encerrar();
                     break; 
             }
       
