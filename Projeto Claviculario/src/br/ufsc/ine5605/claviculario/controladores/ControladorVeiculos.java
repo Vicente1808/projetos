@@ -125,16 +125,17 @@ public class ControladorVeiculos{
     public String[][] getVeiculosSimples(){
         int tamanho = mapeadorVeiculo.getList().size();
         String[][] placas = new String[tamanho][2];
-        /*
+        
             for(int i = 0; i<tamanho;i++){
                 for(Veiculo veiculo: mapeadorVeiculo.getList()){
                 String placa = veiculo.getPlaca();
                 String modelo = veiculo.getModelo();
-                //placas[i][0]= placa;
-                //placas[i][1]=modelo;
+                placas[i][0]= placa;
+                placas[i][1]=modelo;
             }
-        }*/
+        }
         return placas;
+        
     }
     
     public HashMap getVeiculos() {
