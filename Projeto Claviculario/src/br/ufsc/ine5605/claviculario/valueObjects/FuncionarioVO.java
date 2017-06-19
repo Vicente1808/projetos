@@ -7,6 +7,7 @@ package br.ufsc.ine5605.claviculario.valueObjects;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *

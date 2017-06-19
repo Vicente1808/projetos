@@ -5,13 +5,12 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorVeiculo;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosVeiculo;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ControladorVeiculos{
     //Atributos
     private static ControladorVeiculos instance;
-    private TelaDadosVeiculo telaDadosVeiculo;
+    private final TelaDadosVeiculo telaDadosVeiculo;
     private final MapeadorVeiculo mapeadorVeiculo;
     
     
@@ -20,26 +19,10 @@ public class ControladorVeiculos{
         this.telaDadosVeiculo = new TelaDadosVeiculo(this);
     }
     
-    public void carregarTelaCadastroVeiculo(){
-        telaDadosVeiculo.setTitle("Novo Veiculo");
-        telaDadosVeiculo.trocarBotao("btCadastrar");
-        telaDadosVeiculo.limparTela();
-        telaDadosVeiculo.alterarEdicao(true);
-        telaDadosVeiculo.setVisible(true);
-
-    }
-   
-    public void carregarTelaExclusãoVeiculo(){
-        telaDadosVeiculo.setTitle("Exclusão De Veiculo");
-        telaDadosVeiculo.trocarBotao("btExcluir");
-        telaDadosVeiculo.limparTela();
-        telaDadosVeiculo.alterarEdicao(false);
-        telaDadosVeiculo.setVisible(true);
-    }
     
-    public void carregarTelaAtualizacaoVeiculo(){
-        telaDadosVeiculo.setTitle("Atualização Cadastro De Veiculo");
-        telaDadosVeiculo.trocarBotao("Atualizar");
+    public void carregarTelaDadosVeiculo(String titulo, int tipo){
+        telaDadosVeiculo.setTitle(titulo);
+        telaDadosVeiculo.definirBotoes(tipo);
         telaDadosVeiculo.limparTela();
         telaDadosVeiculo.alterarEdicao(true);
         telaDadosVeiculo.setVisible(true);

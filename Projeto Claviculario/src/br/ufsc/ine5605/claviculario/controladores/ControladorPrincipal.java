@@ -167,6 +167,11 @@ public class ControladorPrincipal {
         ControladorRegistros.getInstance().carregaMenuRegistros();
     }
     
+    public void atualizarDados() {
+        telaGereciamentoFuncionarios.updateData();
+        telaGerenciamentoVeiculos.updateData();
+    }
+    
     public boolean validarMatricula(int matricula){
         return ControladorFuncionarios.getInstance().validarMatricula(matricula);
     }

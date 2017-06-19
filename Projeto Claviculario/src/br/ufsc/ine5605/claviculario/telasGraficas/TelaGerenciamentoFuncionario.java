@@ -34,7 +34,7 @@ public class TelaGerenciamentoFuncionario extends JFrame implements ActionListen
     private JButton btLiberarVeiculos;
     private JScrollPane scroll;
     private JTable listaFuncionarios;
-    private TableModelPessoal tableModel;
+    private TableModelFuncionarios tableModel;
     
     public TelaGerenciamentoFuncionario(ControladorPrincipal controladorPrincipal){
         super("Gerenciamento De Funcionários");
@@ -52,7 +52,7 @@ public class TelaGerenciamentoFuncionario extends JFrame implements ActionListen
         btAtualizar = new JButton();
         btLiberarVeiculos = new JButton(); 
         listaFuncionarios = new JTable(); 
-        tableModel = new TableModelPessoal(ControladorFuncionarios.getInstance().getFuncionarios());
+        tableModel = new TableModelFuncionarios();
         scroll = new JScrollPane(listaFuncionarios);
         
         Insets insets = container.getInsets();
@@ -106,20 +106,25 @@ public class TelaGerenciamentoFuncionario extends JFrame implements ActionListen
         //ctrl.carregarMenuPrincipal();
     }
     
-    public void atualizarTabelaFuncionarios(){
+    public void updateData(){
         tableModel.atualizarTabela();
         repaint();
-        revalidate();
     }
     
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
-            ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Novo Funcionario");
-            atualizarTabelaFuncionarios();
-        }else{
-            
+            ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Novo Funcionario", 0);
+            updateData();
+        }else if(ae.getSource() == btExcluir) {
+            if(listaFuncionarios.getSelectedRow() != -1) {
+                int index = listaFuncionarios.getSelectedRow();
+                ControladorFuncionarios.getInstance().excluirFuncionario( (int) tableModel.getValueAt(index, 0));
+                updateData();
+            }
+        } else if(ae.getSource() == btAtualizar) {
+            ControladorFuncionarios.getInstance().carregarTelaGraficaDadosFuncionarios("Atualizar", 1);
         }
         
     }

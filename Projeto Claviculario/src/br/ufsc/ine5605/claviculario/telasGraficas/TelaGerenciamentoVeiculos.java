@@ -31,6 +31,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     private JButton btAtualizar;
     private JButton btLiberarFuncionario;
     private JTable  tabelaVeiculos;
+    private TableModelVeiculos tableModel;
     private JScrollPane scroll;
     
     public TelaGerenciamentoVeiculos(ControladorPrincipal controladorPrincipal){
@@ -39,13 +40,14 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
         inicia();
     }
     
-    public void inicia(){
+    private void inicia(){
         lbTitulo = new JLabel();
         btNovo = new JButton();
         btExcluir = new JButton();
         btAtualizar = new JButton();
         btLiberarFuncionario = new JButton();
-        tabelaVeiculos = new JTable(7,8);
+        tabelaVeiculos = new JTable();
+        tableModel = new TableModelVeiculos();
         scroll = new JScrollPane(tabelaVeiculos);
     
         lbTitulo.setText("Gerenciamento De Veículos");
@@ -69,6 +71,7 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
         btLiberarFuncionario.setBounds(500, 503, 135, 50);
         btLiberarFuncionario.addActionListener(this); 
         
+        tabelaVeiculos.setModel(tableModel);
         tabelaVeiculos.setFillsViewportHeight(true);
         
         scroll.setToolTipText("Tabela Veiculos");
@@ -91,29 +94,23 @@ public class TelaGerenciamentoVeiculos extends JFrame implements ActionListener{
     }
     
     public void updateData(){
-        DefaultTableModel modeloPadrao = new DefaultTableModel();
-        modeloPadrao.addColumn("Placa");
-        modeloPadrao.addColumn("Modelo");
-        modeloPadrao.addColumn("Marca");
-        modeloPadrao.addColumn("Ano");
-        modeloPadrao.addColumn("KM Atual");
-        modeloPadrao.addColumn("Disponível");
-        
-        //for(VeiculoVO veiculo:){
-            
-        //}
-        
+        tableModel.atualizarDados();
+        repaint();
     }   
             
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == btNovo){
-            ControladorVeiculos.getInstance().carregarTelaCadastroVeiculo();
+            ControladorVeiculos.getInstance().carregarTelaDadosVeiculo("Cadastro", 0);
         }else if(ae.getSource()==btExcluir){
-            ControladorVeiculos.getInstance().carregarTelaExclusãoVeiculo();
+            if(tabelaVeiculos.getSelectedRow() != -1) {
+                int index = tabelaVeiculos.getSelectedRow();
+                ControladorVeiculos.getInstance().excluirVeiculo( (String) tableModel.getValueAt(index, 0));
+                updateData();
+            }
         }else if(ae.getSource()==btAtualizar){
-            ControladorVeiculos.getInstance().carregarTelaAtualizacaoVeiculo();
+            ControladorVeiculos.getInstance().carregarTelaDadosVeiculo("Atualização", 1);
         }
     }
     

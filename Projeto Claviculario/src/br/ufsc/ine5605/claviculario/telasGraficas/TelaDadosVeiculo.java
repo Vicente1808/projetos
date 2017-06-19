@@ -5,6 +5,7 @@
  */
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
+import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.claviculario.controladores.ControladorVeiculos;
 import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.valueObjects.VeiculoVO;
@@ -33,7 +34,7 @@ import javax.swing.text.NumberFormatter;
  */
 public class TelaDadosVeiculo extends JFrame implements ActionListener, KeyListener {
 
-    private ControladorVeiculos controladorVeiculos;
+    private final ControladorVeiculos controladorVeiculos;
     private JLabel lbPlaca;
     private JLabel lbMarca;
     private JLabel lbModelo;
@@ -144,7 +145,6 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener, KeyListe
         
         Container container = getContentPane();
         container.setLayout(null);
-        //container.addKeyListener(this);
 
         container.add(lbPlaca);
         container.add(lbMarca);
@@ -175,23 +175,23 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener, KeyListe
         tfKmAtual.setEditable(tipo);
     }
     
-    public void trocarBotao(String botao){
+    public void definirBotoes(int tipo){
         Container container = getContentPane();
-        if(botao.equals("btCadastrar")){
-            container.remove(btAtualizar);
-            container.remove(btExcluir);
-            container.add(btPesquisar);
-            container.add(btCadastrar);
-        }else if(botao.equals("btExcluir")){
-            container.remove(btAtualizar);
-            container.remove(btCadastrar);
-            container.add(btExcluir);
-            container.add(btPesquisar);
-        }else if(botao.equals("Atualizar")){
-            container.add(btAtualizar);
-            container.remove(btExcluir);
-            container.remove(btCadastrar);
-            container.add(btPesquisar);
+        switch (tipo) {
+            case 0:
+                container.remove(btAtualizar);
+                container.remove(btExcluir);
+                container.add(btCadastrar);
+                container.add(btPesquisar);
+                break;
+            case 1:
+                container.remove(btExcluir);
+                container.remove(btCadastrar);
+                container.add(btAtualizar);
+                container.add(btPesquisar);
+                break;
+            default:
+                break;
         }
         
     }
@@ -273,6 +273,7 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener, KeyListe
                 infoTela.setText(ControladorVeiculos.getInstance().cadastrarVeiculo(veiculoVO));
                 
             }
+            ControladorPrincipal.getInstance().atualizarDados();
         }else if(ae.getSource()==btExcluir){
             
             pesquisar();
@@ -299,9 +300,7 @@ public class TelaDadosVeiculo extends JFrame implements ActionListener, KeyListe
             infoTela.setForeground(Color.blue);
             infoTela.setText(ControladorVeiculos.getInstance().atualizarCadastroVeiculo(veiculoVO));
             
-                           
-                
-            
+            ControladorPrincipal.getInstance().atualizarDados();
         }
     }    
 

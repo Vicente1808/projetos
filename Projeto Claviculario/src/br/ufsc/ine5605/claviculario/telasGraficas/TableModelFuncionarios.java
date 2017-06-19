@@ -5,7 +5,10 @@
  */
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
+import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
+import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,15 +17,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author 05169430906
  */
-public class TableModelPessoal extends AbstractTableModel{
+public class TableModelFuncionarios extends AbstractTableModel{
     
-    private final HashMap<Integer, FuncionarioVO> lista;
+    private HashMap<Integer, FuncionarioVO> lista;
     private final String[] nomeColunas = {"Matricula", "Nome", "Nascimento", "Telefone", "Cargo", "Bloqueado"};
-    private final Object[][] data;
+    private Object[][] data;
     
-    TableModelPessoal(HashMap<Integer, FuncionarioVO> lista) {
-        this.lista = lista;
-        data = new Object[lista.keySet().size()][6];
+    TableModelFuncionarios() {
         atualizarTabela();
     }
 
@@ -38,7 +39,11 @@ public class TableModelPessoal extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return data[rowIndex][columnIndex];
+        if(data.length > 0) {
+            return data[rowIndex][columnIndex];
+        } else {
+            return -1;
+        }
     }
     
     @Override
@@ -47,12 +52,16 @@ public class TableModelPessoal extends AbstractTableModel{
     }
     
     public final void atualizarTabela() {
+        lista = ControladorFuncionarios.getInstance().getFuncionarios();
+        data = new Object[lista.keySet().size()][nomeColunas.length];
         int index = 0;
         for(Integer chave : lista.keySet()) {
             lista.get(chave);
             data[index][0] = lista.get(chave).matricula;
             data[index][1] = lista.get(chave).nome;
-            data[index][2] = lista.get(chave).dataNascimento;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dataNascimento1 = sdf.format(lista.get(chave).dataNascimento.getTime());
+            data[index][2] = dataNascimento1;
             data[index][3] = lista.get(chave).telefone;
             data[index][4] = lista.get(chave).cargo;
             data[index][5] = lista.get(chave).bloqueado;

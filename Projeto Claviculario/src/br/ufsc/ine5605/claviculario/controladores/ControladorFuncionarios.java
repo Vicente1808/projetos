@@ -5,7 +5,6 @@ import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.persistencia.MapeadorFuncionario;
 import br.ufsc.ine5605.claviculario.telasGraficas.TelaDadosFuncionario;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -28,8 +27,10 @@ public class ControladorFuncionarios{
         //this.telaGraficaGerenciamentoFuncionario = new TelaGerenciamentoFuncionario(this);
     }
     
-    public void carregarTelaGraficaDadosFuncionarios(String titulo){
+    public void carregarTelaGraficaDadosFuncionarios(String titulo, int tipo){
         telaGraficaDadosFuncionario.setTitle(titulo);
+        telaGraficaDadosFuncionario.definirBotoes(tipo);
+        telaGraficaDadosFuncionario.limparTela();
         telaGraficaDadosFuncionario.setVisible(true);
     }
     //Metodos Operacionais

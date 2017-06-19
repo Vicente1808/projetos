@@ -6,13 +6,17 @@
 package br.ufsc.ine5605.claviculario.telasGraficas;
 
 import br.ufsc.ine5605.claviculario.controladores.ControladorFuncionarios;
+import br.ufsc.ine5605.claviculario.controladores.ControladorPrincipal;
+import br.ufsc.ine5605.claviculario.enums.EntradaSaida;
 import br.ufsc.ine5605.claviculario.valueObjects.FuncionarioVO;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +38,7 @@ import javax.swing.text.NumberFormatter;
  *
  * @author pablo
  */
-public class TelaDadosFuncionario extends JFrame implements ActionListener{
+public class TelaDadosFuncionario extends JFrame implements ActionListener, KeyListener{
     
     private ControladorFuncionarios controladorFuncionarios;
     private JLabel lbTitulo;
@@ -54,6 +58,8 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
     private JComboBox tfCargo;
     private JComboBox tfBloqueado;
     private JButton btCadastrar;
+    private JButton btAtualizar;
+    private JButton btPesquisar;
     private JTextField tfCargoOutro;
     
     public TelaDadosFuncionario(ControladorFuncionarios controladorFuncionarios){
@@ -75,7 +81,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         String[] cargos = {"Diretor","Outro"};
         String[] status = {"Liberado","Bloqueado"};
         
-        tfMatricula = new JFormattedTextField(new DefaultFormatterFactory(new NumberFormatter(NumberFormat.getIntegerInstance())));
+        tfMatricula = new JFormattedTextField(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("######"))));
         tfMatricula.setText("");
         tfNome = new JTextField();
         
@@ -93,11 +99,13 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         tfCargo = new JComboBox(cargos);
         tfBloqueado = new JComboBox(status);
         btCadastrar = new JButton();
+        btAtualizar = new JButton();
+        btPesquisar = new JButton();
         tfCargoOutro = new JTextField();
         
         Container container = getContentPane();
         container.setLayout(null);
-        //container.setBackground(Color.white);
+        
         
         lbTitulo.setText(getTitle());
         lbTitulo.setForeground(Color.black);
@@ -108,6 +116,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         lbMatricula.setBounds(50, 50, 100, 50);
         
         tfMatricula.setBounds(170, 60, 120, 25);
+        tfMatricula.addKeyListener(this);
         
         lbNome.setText("Nome:");
         lbNome.setBounds(50, 100, 100, 50);
@@ -145,6 +154,14 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         btCadastrar.setBounds(50, 370, 120, 30);
         btCadastrar.addActionListener(this);
         
+        btAtualizar.setText("Atualizar");
+        btAtualizar.setBounds(50, 370, 120, 30);
+        btAtualizar.addActionListener(this);
+
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.setBounds(170, 370, 120, 30);
+        btPesquisar.addActionListener(this);
+        
         infoTela.setBounds(320, 370, 330, 25);
         infoTela.setForeground(Color.red);
         
@@ -174,6 +191,8 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         container.add(tfCargo);
         container.add(tfBloqueado);
         container.add(btCadastrar);
+        container.add(btAtualizar);
+        container.add(btPesquisar);
         container.add(jscroll);
         container.add(infoTela);
         
@@ -184,7 +203,48 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
                 container.add(tfCargoOutro);
             }
     }   
+    
+    public void pesquisar() {
+        infoTela.setText("");
+        EntradaSaida retorno = null;
+        int matr = -1;
+        try {
+        matr = Integer.parseInt(tfMatricula.getText());
+        } catch(NumberFormatException e) {
+            retorno = EntradaSaida.MATRICULAINCORRETA;
+        }
+        if(ControladorFuncionarios.getInstance().validarMatricula(matr)) {
+            FuncionarioVO funcionario = ControladorFuncionarios.getInstance().getFuncionario(matr);
+            tfNome.setText(funcionario.nome);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String a = sdf.format(funcionario.dataNascimento.getTime());
+            tfDataNascimento.setText(a);
+            tfTelefone.setText(funcionario.telefone);
+            tfCargoOutro.setText(funcionario.cargo);
             
+        } else {
+            retorno = EntradaSaida.MATRICULAINVALIDA;
+        }
+        if(retorno != null) 
+            infoTela.setText(retorno.getMensagem());
+    }
+    
+    public void definirBotoes(int tipo) {
+        Container container = getContentPane();
+        switch (tipo) {
+            case 0:
+                container.remove(btAtualizar);
+                container.add(btCadastrar);
+                break;
+            case 1:
+                container.remove(btCadastrar);
+                container.add(btAtualizar);
+                break;
+            default:
+                break;
+        }
+    }
+    
     public void limparTela(){
         tfMatricula.setText("");
         tfNome.setText("");
@@ -206,6 +266,7 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
         }
         
         if(ae.getSource() == btCadastrar) {
+            System.out.println(getTitle());
             if(tfMatricula.getText().equals("")){
                 infoTela.setText("Campo Matrícula está em branco.");
                 infoTela.setForeground(Color.BLUE);
@@ -243,10 +304,11 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
                     infoTela.setText("Data nascimento inválida.");
                     repaint();                     
                 }
+                funcionarioVO.dataNascimento = c;
                 
                 funcionarioVO.telefone = tfTelefone.getText();
                 
-                if(tfCargo.getSelectedItem().equals("Outro")&&tfCargoOutro.getText().equals("")){
+                if(tfCargo.getSelectedItem().equals("Outro")){
                     funcionarioVO.cargo = tfCargoOutro.getText();
                 }else{
                     funcionarioVO.cargo = tfCargo.getSelectedItem().toString();
@@ -266,8 +328,28 @@ public class TelaDadosFuncionario extends JFrame implements ActionListener{
                 
                 
             }
+            ControladorPrincipal.getInstance().atualizarDados();
             
+        } else if(ae.getSource() == btPesquisar) {
+            pesquisar();
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+            System.out.println("teste");
+            pesquisar();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
     
 }
